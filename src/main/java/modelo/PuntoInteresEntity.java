@@ -15,12 +15,15 @@ public class PuntoInteresEntity {
     private String direccion;
     private String horario;
     private Double coste;
-    private boolean accesibilidad;
+    private Boolean accesibilidad;
     private Double puntuacion;
     private String categoria;
     private Double latitud;
     private Double longitud;
+    private String enlaceInfo;
+    private String contacto;
     private Collection<FotoPuntoInteresEntity> fotoPuntoInteresByIdPuntoInteres;
+    private UsuarioEntity usuarioByIdUsuario;
 
     @Id
     @Column(name = "id_punto_interes")
@@ -104,11 +107,11 @@ public class PuntoInteresEntity {
 
     @Basic
     @Column(name = "accesibilidad")
-    public boolean isAccesibilidad() {
+    public Boolean getAccesibilidad() {
         return accesibilidad;
     }
 
-    public void setAccesibilidad(boolean accesibilidad) {
+    public void setAccesibilidad(Boolean accesibilidad) {
         this.accesibilidad = accesibilidad;
     }
 
@@ -152,6 +155,26 @@ public class PuntoInteresEntity {
         this.longitud = longitud;
     }
 
+    @Basic
+    @Column(name = "enlace_info")
+    public String getEnlaceInfo() {
+        return enlaceInfo;
+    }
+
+    public void setEnlaceInfo(String enlaceInfo) {
+        this.enlaceInfo = enlaceInfo;
+    }
+
+    @Basic
+    @Column(name = "contacto")
+    public String getContacto() {
+        return contacto;
+    }
+
+    public void setContacto(String contacto) {
+        this.contacto = contacto;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -169,12 +192,14 @@ public class PuntoInteresEntity {
                 Objects.equals(puntuacion, that.puntuacion) &&
                 Objects.equals(categoria, that.categoria) &&
                 Objects.equals(latitud, that.latitud) &&
-                Objects.equals(longitud, that.longitud);
+                Objects.equals(longitud, that.longitud) &&
+                Objects.equals(enlaceInfo, that.enlaceInfo) &&
+                Objects.equals(contacto, that.contacto);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idPuntoInteres, nombre, resumen, infoDetallada, fechaInicio, direccion, horario, coste, accesibilidad, puntuacion, categoria, latitud, longitud);
+        return Objects.hash(idPuntoInteres, nombre, resumen, infoDetallada, fechaInicio, direccion, horario, coste, accesibilidad, puntuacion, categoria, latitud, longitud, enlaceInfo, contacto);
     }
 
     @OneToMany(mappedBy = "puntoInteresByIdPuntoInteres")
@@ -184,5 +209,15 @@ public class PuntoInteresEntity {
 
     public void setFotoPuntoInteresByIdPuntoInteres(Collection<FotoPuntoInteresEntity> fotoPuntoInteresByIdPuntoInteres) {
         this.fotoPuntoInteresByIdPuntoInteres = fotoPuntoInteresByIdPuntoInteres;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
+    public UsuarioEntity getUsuarioByIdUsuario() {
+        return usuarioByIdUsuario;
+    }
+
+    public void setUsuarioByIdUsuario(UsuarioEntity usuarioByIdUsuario) {
+        this.usuarioByIdUsuario = usuarioByIdUsuario;
     }
 }
