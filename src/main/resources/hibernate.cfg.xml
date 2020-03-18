@@ -5,12 +5,13 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.dialect">org.hibernate.dialect.MariaDBDialect</property>
-        <property name="connection.url">jdbc:mysql://dam2.mysql.iesquevedo.es:3335/descubre_espana</property>
+        <property name="connection.url">jdbc:mysql://dam2.mysql.iesquevedo.es:3335</property>
         <property name="hibernate.enable_lazy_load_no_trans">true</property>
         <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <mapping class="modelo.FotoPuntoInteresEntity"/>
-        <mapping class="modelo.PuntoInteresEntity"/>
-        <mapping class="modelo.UsuarioEntity"/>
-        <mapping class="modelo.ValoracionEntity"/>
+        <!-- <property name="connection.driver_class">org.mariadb.jdbc.Driver</property> -->
+        <mapping class="modelo.entity.FotoPuntoInteresEntity"/>
+        <mapping class="modelo.entity.PuntoInteresEntity"/>
+        <mapping class="modelo.entity.UsuarioEntity"/>
+        <mapping class="modelo.entity.ValoracionEntity"/>
     </session-factory>
 </hibernate-configuration>

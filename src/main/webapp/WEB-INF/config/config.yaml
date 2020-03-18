@@ -1,0 +1,9 @@
+urlDB: jdbc:mysql://dam2.mysql.iesquevedo.es:3335/gonzalocuadrado_usuarios_servidor?sslMode=disabled
+username: root
+password: root
+driver: com.mysql.cj.jdbc.Driver
+tiempoActivacion: 2
+email: alumnosDamQuevedo@gmail.com
+emailPass: quevedo2020
+smtpHost: smtp.gmail.com
+smtpPort: 587

@@ -1,4 +1,4 @@
-package modelo;
+package modelo.entity;
 
 import javax.persistence.*;
 import java.util.Collection;
