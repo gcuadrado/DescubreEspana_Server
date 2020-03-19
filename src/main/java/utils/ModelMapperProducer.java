@@ -26,9 +26,6 @@ public class ModelMapperProducer {
     return JsonbBuilder.create();
   }
 
-  @Produces
-  @Singleton
-  public Validacion producesValidacion(){return new Validacion();}
 
 
 

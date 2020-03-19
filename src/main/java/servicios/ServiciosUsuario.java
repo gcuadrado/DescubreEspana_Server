@@ -6,7 +6,7 @@ import modelo.dto.UsuarioDtoGet;
 import modelo.dto.UsuarioDtoPost;
 import modelo.entity.UsuarioEntity;
 import utils.PasswordHash;
-import utils.Validacion;
+import utils.ValidacionTool;
 
 import javax.inject.Inject;
 import java.net.HttpURLConnection;
@@ -21,11 +21,11 @@ public class ServiciosUsuario {
     @Inject
     private PasswordHash passwordHash;
     @Inject
-    private Validacion validacion;
+    private ValidacionTool validacionTool;
 
 
     public UsuarioDtoGet save(UsuarioDtoPost usuario, String codigoActivacion) throws ServerException {
-        String erroresValidacion = validacion.validarObjeto(usuario);
+        String erroresValidacion = validacionTool.validarObjeto(usuario);
         UsuarioDtoGet usuarioRegistrado=null;
         if (erroresValidacion.length() == 0) {
             try {

@@ -28,28 +28,28 @@ public class UserDao {
     private ModelMapper modelMapper;
 
     public UsuarioDtoGet save(UsuarioEntity usuario, String codigoActivacion) throws ServerException {
-        UsuarioDtoGet usuarioDtoGet=null;
+        UsuarioDtoGet usuarioDtoGet = null;
         try {
-            session= HibernateUtil.getSession();
+            session = HibernateUtil.getSession();
             session.beginTransaction();
             session.save(usuario);
             session.getTransaction().commit();
 
-            usuarioDtoGet=modelMapper.map(usuario,UsuarioDtoGet.class);
+            usuarioDtoGet = modelMapper.map(usuario, UsuarioDtoGet.class);
 
         } catch (Exception e) {
-        if (session.getTransaction() != null) {
-            session.getTransaction().rollback();
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+            if (e.getCause() instanceof SQLIntegrityConstraintViolationException) {
+                throw new ServerException(HttpURLConnection.HTTP_CONFLICT, "Ya existe un usuario con este email");
+            } else {
+                throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR, "Ha habido un error al acceder a la base de datos");
+            }
+        } finally {
+            session.close();
         }
-        Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
-        if (e.getCause() instanceof SQLIntegrityConstraintViolationException) {
-            throw new ServerException(HttpURLConnection.HTTP_CONFLICT,"Ya existe un usuario con este email");
-        }else{
-            throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR,"Ha habido un error al acceder a la base de datos");
-        }
-    } finally {
-        session.close();
-    }
 
         return usuarioDtoGet;
     }
