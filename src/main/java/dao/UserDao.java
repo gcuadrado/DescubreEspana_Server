@@ -10,12 +10,14 @@ import modelo.ServerException;
 import modelo.dto.UsuarioDtoGet;
 import modelo.entity.UsuarioEntity;
 import org.hibernate.Session;
+import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.query.Query;
 import org.modelmapper.ModelMapper;
+import utils.Constantes;
 import utils.HibernateUtil;
 
 import javax.inject.Inject;
 import java.net.HttpURLConnection;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,7 +44,7 @@ public class UserDao {
             if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
             }
-            if (e.getCause() instanceof SQLIntegrityConstraintViolationException) {
+            if (e.getCause() instanceof ConstraintViolationException) {
                 throw new ServerException(HttpURLConnection.HTTP_CONFLICT, "Ya existe un usuario con este email");
             } else {
                 throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR, "Ha habido un error al acceder a la base de datos");
@@ -121,25 +123,35 @@ public class UserDao {
         return success;
     }
 
-
+*/
     public int reestablecerPassword(String email, String newPassword) {
         int success = Constantes.FAIL;
-        JdbcTemplate jtm = new JdbcTemplate(db.getDataSource());
         try {
-            if (comprobarCuentaActivada(email)) {
-                int result = jtm.update(SQLStatements.UPDATE_PASSWORD, newPassword, email);
-                if (result > 0) {
-                    success = Constantes.SUCCESS;
-                }
-            } else {
-                success = Constantes.CUENTA_NO_ACTIVADA;
+            session=HibernateUtil.getSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from UsuarioEntity where email = :email");
+            query.setParameter("email", email);
+            UsuarioEntity usuarioEntity = (UsuarioEntity) query.uniqueResult();
+            if(usuarioEntity!=null) {
+                // if(Duration.between(usuarioEntity.getFechaRegistro(), LocalDateTime.now()).getSeconds()<1) {
+                usuarioEntity.setPassword(newPassword);
+                session.save(usuarioEntity);
+                session.getTransaction().commit();
+            }else{
+                throw new ServerException(HttpURLConnection.HTTP_BAD_REQUEST, "No hay ningún usuario con este email");
             }
-        } catch (DataAccessException e) {
+
+        } catch (Exception e) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
+            if(!(e instanceof ServerException)) {
+                throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR, "Ha habido un error al acceder a la base de datos");
+            }else{
+                throw e;
+            }
         }
         return success;
     }
-
+/*
     public boolean comprobarCuentaActivada(String email) throws ServerException {
         boolean acitvada = false;
         JdbcTemplate jtm = new JdbcTemplate(db.getDataSource());

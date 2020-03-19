@@ -2,9 +2,11 @@ package rest;
 
 
 import modelo.ApiError;
+import modelo.UserKeystore;
 import modelo.dto.UsuarioDtoGet;
 import modelo.dto.UsuarioDtoPost;
 import org.apache.commons.mail.EmailException;
+import servicios.ServiciosKeyStore;
 import servicios.ServiciosUsuario;
 import utils.MandarMail;
 import utils.Utils;
@@ -32,8 +34,8 @@ public class RestUsuarios {
     private MandarMail mandarMail;
     @Context
     ServletContext context;
-    /*@Inject
-    private AlmacenarClavesServidor almacenarClavesServidor;*/
+    @Inject
+    private ServiciosKeyStore serviciosKeyStore;
 
 
     /*@POST
@@ -70,8 +72,13 @@ public class RestUsuarios {
         String codgiActivacion = Utils.randomBytes();
         try {
             UsuarioDtoGet usuarioDtoGet = serviciosUsuario.save(usuario, codgiActivacion);
+            String keystore=serviciosKeyStore.generarKeyStoreCliente(usuario,context);
+            UserKeystore userKeystore=UserKeystore.builder()
+                    .usuarioDtoGet(usuarioDtoGet)
+                    .keystore(keystore)
+                    .build();
             mandarMail.mandarMail(usuario.getEmail(), "Pincha para activar tu cuenta: <a href=\"http://localhost:8080/servidorGestionUsuarios/activacion?email=" + usuario.getEmail() + "&codigo_activacion=" + codgiActivacion + "\">aquí</a>", "Activación usuario");
-            response = Response.status(Response.Status.CREATED).entity(usuarioDtoGet).build();
+            response = Response.status(Response.Status.CREATED).entity(userKeystore).build();
         } catch (EmailException e) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
             response = Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ApiError(HttpURLConnection.HTTP_INTERNAL_ERROR, "No se ha podido enviar el email")).build();

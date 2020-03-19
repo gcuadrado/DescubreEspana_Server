@@ -1,10 +1,14 @@
 package servicios;
 
+import com.github.javafaker.Faker;
+import com.google.common.base.Strings;
 import dao.UserDao;
 import modelo.ServerException;
 import modelo.dto.UsuarioDtoGet;
 import modelo.dto.UsuarioDtoPost;
 import modelo.entity.UsuarioEntity;
+import org.apache.commons.validator.routines.EmailValidator;
+import utils.Constantes;
 import utils.PasswordHash;
 import utils.ValidacionTool;
 
@@ -12,6 +16,7 @@ import javax.inject.Inject;
 import java.net.HttpURLConnection;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,6 +40,9 @@ public class ServiciosUsuario {
                 usuarioEntity.setEmail(usuario.getEmail());
                 usuarioEntity.setPassword(password);
                 usuarioEntity.setCodigoActivacion(codigoActivacion);
+                usuarioEntity.setActivado(false);
+                usuarioEntity.setTipoUsuario(Constantes.STANDARD_USER);
+                usuarioEntity.setFechaRegistro(LocalDateTime.now());
 
                 usuarioRegistrado = userDao.save(usuarioEntity, codigoActivacion);
 
@@ -146,7 +154,7 @@ public class ServiciosUsuario {
         return result;
     }
 
-
+*/
     public String reestablecerPassword(String email) throws ServerException {
         Faker faker = new Faker();
         String newPassword = faker.pokemon().name();
@@ -165,6 +173,7 @@ public class ServiciosUsuario {
         }
         return newPassword;
     }
+    /*
 
     public boolean updateCodigoTimestamp(String codigoActivacion, String email) throws ServerException {
         boolean result;

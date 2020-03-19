@@ -1,7 +1,7 @@
 package modelo.entity;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -12,7 +12,7 @@ public class UsuarioEntity {
     private String password;
     private String codigoActivacion;
     private Boolean activado;
-    private Timestamp fechaRegistro;
+    private LocalDateTime fechaRegistro;
     private Integer tipoUsuario;
     private String publicKey;
 
@@ -83,11 +83,11 @@ public class UsuarioEntity {
 
     @Basic
     @Column(name = "fecha_registro")
-    public Timestamp getFechaRegistro() {
+    public LocalDateTime getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(Timestamp fechaRegistro) {
+    public void setFechaRegistro(LocalDateTime fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
 
