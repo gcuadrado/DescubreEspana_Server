@@ -3,7 +3,7 @@ username: root
 password: root
 driver: com.mysql.cj.jdbc.Driver
 tiempoActivacion: 2
-email: alumnosDamQuevedo@gmail.com
-emailPass: quevedo2020
+email: ipcamseguridad5@gmail.com
+emailPass: oropesa00
 smtpHost: smtp.gmail.com
 smtpPort: 587

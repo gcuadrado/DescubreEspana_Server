@@ -13,6 +13,7 @@ import utils.Utils;
 
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -67,7 +68,7 @@ public class RestUsuarios {
 
     @POST
     @Path("/registro")
-    public Response registrarUsuario(UsuarioDtoPost usuario) {
+    public Response registrarUsuario(UsuarioDtoPost usuario, @Context HttpServletRequest request) {
         Response response;
         String codgiActivacion = Utils.randomBytes();
         try {
@@ -77,7 +78,8 @@ public class RestUsuarios {
                     .usuarioDtoGet(usuarioDtoGet)
                     .keystore(keystore)
                     .build();
-            mandarMail.mandarMail(usuario.getEmail(), "Pincha para activar tu cuenta: <a href=\"http://localhost:8080/servidorGestionUsuarios/activacion?email=" + usuario.getEmail() + "&codigo_activacion=" + codgiActivacion + "\">aquí</a>", "Activación usuario");
+            String baseUrl=request.getRequestURL().toString().substring(0,request.getRequestURL().indexOf(request.getServletPath()));
+            mandarMail.mandarMail(usuario.getEmail(), "Pincha para activar tu cuenta: <a href=\""+baseUrl+"/activacion"+"?email=" + usuario.getEmail() + "&codigo_activacion=" + codgiActivacion + "\">aquí</a>", "Activación usuario");
             response = Response.status(Response.Status.CREATED).entity(userKeystore).build();
         } catch (EmailException e) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);

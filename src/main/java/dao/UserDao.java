@@ -115,7 +115,7 @@ public class UserDao {
             query.setParameter("codigo", codigoActivacion);
             UsuarioEntity usuarioEntity = (UsuarioEntity) query.uniqueResult();
             if (usuarioEntity != null) {
-                if (Duration.between(usuarioEntity.getFechaRegistro(), LocalDateTime.now()).getSeconds() < tiempoActivacion) {
+                if (Duration.between(usuarioEntity.getFechaRegistro(), LocalDateTime.now()).toMinutes() < tiempoActivacion) {
                     usuarioEntity.setActivado(true);
                     session.getTransaction().commit();
                     success = Constantes.SUCCESS;
@@ -127,11 +127,16 @@ public class UserDao {
             }
         } catch (Exception e) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
             if (!(e instanceof ServerException)) {
                 throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR, "Ha habido un error al acceder a la base de datos");
             } else {
                 throw e;
             }
+        } finally {
+            session.close();
         }
         return success;
     }
@@ -155,33 +160,21 @@ public class UserDao {
 
         } catch (Exception e) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
             if (!(e instanceof ServerException)) {
                 throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR, "Ha habido un error al acceder a la base de datos");
             } else {
                 throw e;
             }
+        } finally {
+            session.close();
         }
         return success;
     }
 
-    /*
-        public boolean comprobarCuentaActivada(String email) throws ServerException {
-            boolean acitvada = false;
-            JdbcTemplate jtm = new JdbcTemplate(db.getDataSource());
-            try {
-                Integer activado = jtm.queryForObject(SQLStatements.COMPROBAR_CUENTA_ACTIVADA, Integer.class, email);
-                if (activado == 1) {
-                    acitvada = true;
-                }
-            } catch (DataAccessException e) {
-                Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
-                throw new ServerException(HttpURLConnection.HTTP_NOT_FOUND, "Esta dirección no existe en nuestra base de datos");
-            }
-            return acitvada;
-        }
-
-    */
-    public boolean updateCodigoTimestamp(String codigoActivacion, String email) throws ServerException {
+    public boolean updateCodigoTimestamp(String email, String codigoActivacion) throws ServerException {
         boolean success = false;
         try {
             session = HibernateUtil.getSession();
@@ -202,26 +195,17 @@ public class UserDao {
             }
         } catch (Exception e) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
             if (!(e instanceof ServerException)) {
                 throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR, "Ha habido un error al acceder a la base de datos");
             } else {
                 throw e;
             }
+        } finally {
+            session.close();
         }
         return success;
     }
-
-    /*
-
-    public String getPublicKey(Integer id) {
-        JdbcTemplate jtm = new JdbcTemplate(db.getDataSource());
-        String publicKey = null;
-        try {
-            publicKey = jtm.queryForObject(SQLStatements.SELECT_PUBLIC_KEY,String.class, id);
-        } catch (DataAccessException ex) {
-            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
-            throw new ServerException(HttpURLConnection.HTTP_NOT_FOUND, "No se ha encontrado ningún usuario con este ID");
-        }
-        return  publicKey;
-    }*/
 }

@@ -17,6 +17,7 @@ public class UsuarioEntity {
     private String publicKey;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usuario")
     public int getIdUsuario() {
         return idUsuario;
