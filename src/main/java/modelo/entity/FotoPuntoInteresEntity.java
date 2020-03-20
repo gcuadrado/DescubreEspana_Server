@@ -1,5 +1,6 @@
 package modelo.entity;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -44,6 +45,7 @@ public class FotoPuntoInteresEntity {
         return Objects.hash(idFoto, path);
     }
 
+    @JsonbTransient
     @ManyToOne
     @JoinColumn(name = "id_punto_interes", referencedColumnName = "id_punto_interes")
     public PuntoInteresEntity getPuntoInteresByIdPuntoInteres() {
