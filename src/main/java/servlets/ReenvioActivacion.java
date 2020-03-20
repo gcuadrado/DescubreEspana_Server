@@ -38,7 +38,7 @@ public class ReenvioActivacion extends HttpServlet {
         String respuesta;
             String newCode = Utils.randomBytes();
             try {
-                //serviciosUsuario.updateCodigoTimestamp(newCode, email);
+                serviciosUsuario.updateCodigoTimestamp(newCode, email);
                 mandarMail.mandarMail(email, "Pincha para activar tu cuenta: <a href=\"http://localhost:8080/servidorGestionUsuarios/activacion?email=" + email + "&codigo_activacion=" + newCode + "\">aquí</a>", "Activación usuario");
                 respuesta = Constantes.OK;
             } catch (EmailException e) {

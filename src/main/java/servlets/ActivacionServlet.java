@@ -1,5 +1,6 @@
 package servlets;
 
+import modelo.ServerException;
 import servicios.ServiciosUsuario;
 import utils.Constantes;
 
@@ -18,7 +19,7 @@ public class ActivacionServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter(Constantes.EMAIL_PARAMETER);
-      /*  String codigoActivacion = request.getParameter(Constantes.CODIGO_ACTIVACION_PARAMETER);
+       String codigoActivacion = request.getParameter(Constantes.CODIGO_ACTIVACION_PARAMETER);
         try {
             int result = serviciosUsuario.activarCuenta(email, codigoActivacion);
             if (result == Constantes.SUCCESS) {
@@ -31,7 +32,7 @@ public class ActivacionServlet extends HttpServlet {
             }
         } catch (ServerException se) {
             request.getRequestDispatcher("/error-activacion.html").forward(request, response);
-        }*/
+        }
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

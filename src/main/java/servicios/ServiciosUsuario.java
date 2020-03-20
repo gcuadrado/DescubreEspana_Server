@@ -143,6 +143,7 @@ public class ServiciosUsuario {
 
         return usuarioDTO;
     }
+    */
 
     public int activarCuenta(String email, String codigoActivacion) throws ServerException {
         int result;
@@ -154,7 +155,7 @@ public class ServiciosUsuario {
         return result;
     }
 
-*/
+
     public String reestablecerPassword(String email) throws ServerException {
         Faker faker = new Faker();
         String newPassword = faker.pokemon().name();
@@ -173,7 +174,7 @@ public class ServiciosUsuario {
         }
         return newPassword;
     }
-    /*
+
 
     public boolean updateCodigoTimestamp(String codigoActivacion, String email) throws ServerException {
         boolean result;
@@ -184,6 +185,8 @@ public class ServiciosUsuario {
         }
         return result;
     }
+
+    /*
 
     public String getPublicKey(String userId){
         Integer id = Ints.tryParse(userId);
