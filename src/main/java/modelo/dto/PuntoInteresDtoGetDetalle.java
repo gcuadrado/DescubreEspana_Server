@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import modelo.entity.FotoPuntoInteresEntity;
-import modelo.entity.UsuarioEntity;
 
 import java.util.Collection;
 
@@ -29,6 +27,6 @@ public class PuntoInteresDtoGetDetalle {
     private Double longitud;
     private String enlaceInfo;
     private String contacto;
-    private Collection<FotoPuntoInteresEntity> fotoPuntoInteresByIdPuntoInteres;
-    private UsuarioEntity usuarioByIdUsuario;
+    private Collection<FotoPuntoInteresDtoGet> fotoPuntoInteresByIdPuntoInteres;
+    private UsuarioDtoGet usuarioByIdUsuario;
 }
