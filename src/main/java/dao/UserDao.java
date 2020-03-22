@@ -60,50 +60,59 @@ public class UserDao {
     }
 
 
-    /* public boolean delete(int userID) throws ServerException {
-         boolean success = false;
-         JdbcTemplate jtm = new JdbcTemplate(
-                 db.getDataSource());
-         try {
+    public boolean delete(int userID) throws ServerException {
+        boolean success = false;
+        try {
+            session = HibernateUtil.getSession();
+            session.beginTransaction();
+            Query query = session.createQuery("delete from UsuarioEntity u where u.idUsuario=:id");
+            query.setParameter("id", userID);
+            int result = query.executeUpdate();
+            session.getTransaction().commit();
+            if (result > 0) {
+                success = true;
+            }
+        } catch (Exception e) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
+            if(session.getTransaction()!=null){
+                session.getTransaction().rollback();
+            }
+            throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR, "Ha ocurrido un error en nuestra base de datos");
+        }finally {
+            session.close();
+        }
+        return success;
+    }
 
-             int result = jtm.update(SQLStatements.DELETE_USER, userID);
-             if (result > 0) {
-                 success = true;
+
+    /*
+         public Usuario getUsuario(int id) throws ServerException {
+             JdbcTemplate jtm = new JdbcTemplate(db.getDataSource());
+             Usuario usuario = null;
+             try {
+                 usuario = jtm.queryForObject(SQLStatements.SELECT_USER, BeanPropertyRowMapper.newInstance(Usuario.class), id);
+             } catch (DataAccessException ex) {
+                 Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+                 throw new ServerException(HttpURLConnection.HTTP_NOT_FOUND, "No se ha encontrado ningún usuario con este ID");
              }
-         } catch (DataAccessException e) {
-             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
-             throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR, "Ha ocurrido un error en nuestra base de datos");
+             return usuario;
          }
-         return success;
-     }
 
-
-
-     public Usuario getUsuario(int id) throws ServerException {
-         JdbcTemplate jtm = new JdbcTemplate(db.getDataSource());
-         Usuario usuario = null;
-         try {
-             usuario = jtm.queryForObject(SQLStatements.SELECT_USER, BeanPropertyRowMapper.newInstance(Usuario.class), id);
-         } catch (DataAccessException ex) {
-             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
-             throw new ServerException(HttpURLConnection.HTTP_NOT_FOUND, "No se ha encontrado ningún usuario con este ID");
+*/
+         public UsuarioEntity getUserByEmail(String email) throws ServerException {
+             UsuarioEntity usuarioEntity=null;
+             try {
+                 session=HibernateUtil.getSession();
+                 session.beginTransaction();
+                 Query query = session.createQuery("from UsuarioEntity u where u.email=:email");
+                 query.setParameter("email",email);
+                usuarioEntity= (UsuarioEntity)query.uniqueResult();
+             } catch (Exception e) {
+                 Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, e);
+                 throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR, "Ha ocurrido un error en nuestra base de datos");
+             }
+             return usuarioEntity;
          }
-         return usuario;
-     }
-
-
-     public String getCorrectHash(String username) throws ServerException {
-         String hash = "";
-         JdbcTemplate jtm = new JdbcTemplate(db.getDataSource());
-         try {
-             hash = jtm.queryForObject(SQLStatements.GET_HASH_OF_USER, String.class, username);
-         } catch (DataAccessException ex) {
-             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
-             throw new ServerException(HttpURLConnection.HTTP_NOT_FOUND, "El usuario o la contraseña son incorrectos");
-         }
-         return hash;
-     }
- */
     public int activarCuenta(String email, String codigoActivacion) {
         int success = Constantes.FAIL;
         Integer tiempoActivacion = Configuration.getInstance().getTiempoActivacion();

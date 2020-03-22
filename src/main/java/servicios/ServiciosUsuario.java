@@ -2,12 +2,14 @@ package servicios;
 
 import com.github.javafaker.Faker;
 import com.google.common.base.Strings;
+import com.google.common.primitives.Ints;
 import dao.UserDao;
 import modelo.ServerException;
 import modelo.dto.UsuarioDtoGet;
 import modelo.dto.UsuarioDtoPost;
 import modelo.entity.UsuarioEntity;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.modelmapper.ModelMapper;
 import utils.Constantes;
 import utils.PasswordHash;
 import utils.ValidacionTool;
@@ -26,11 +28,13 @@ public class ServiciosUsuario {
     @Inject
     private PasswordHash passwordHash;
     @Inject
-    private ValidacionTool validacionTool;
+    private ValidacionTool validacion;
+    @Inject
+    private ModelMapper modelMapper;
 
 
     public UsuarioDtoGet save(UsuarioDtoPost usuario, String codigoActivacion) throws ServerException {
-        String erroresValidacion = validacionTool.validarObjeto(usuario);
+        String erroresValidacion = validacion.validarObjeto(usuario);
         UsuarioDtoGet usuarioRegistrado=null;
         if (erroresValidacion.length() == 0) {
             try {
@@ -82,7 +86,7 @@ public class ServiciosUsuario {
         return modified;
     }
 
-
+*/
     public boolean delete(String userID) throws ServerException {
         boolean borrado = false;
         Integer id = Ints.tryParse(userID);
@@ -93,6 +97,8 @@ public class ServiciosUsuario {
         }
         return borrado;
     }
+
+    /*
 
     public List<UsuarioDTO> getAll() throws ServerException {
         return userDao.getAll().stream()
@@ -111,24 +117,26 @@ public class ServiciosUsuario {
         return usuario;
     }
 
-    public UsuarioDTO checkCredenciales(UsuarioDtoPost usuario) throws ServerException {
-        UsuarioDTO usuarioDTO = null;
+    */
+
+    public UsuarioDtoGet checkCredenciales(UsuarioDtoPost usuario) throws ServerException {
+        UsuarioDtoGet usuarioDtoGet = null;
         String erroresValidacion = validacion.validarObjeto(usuario);
         if (erroresValidacion.length() == 0) {
             try {
-                String correctHash = userDao.getCorrectHash(usuario.getEmail());
-                if (!correctHash.isEmpty() && passwordHash.validatePassword(usuario.getPassword(), correctHash)) {
-                    if (userDao.comprobarCuentaActivada(usuario.getEmail())) {
-                        usuarioDTO=usuarioConverter.converterUserUserDTO(userDao.getUsuarioByEmail(usuario.getEmail()));
-                        if(usuarioDTO==null){
-                            throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR, "Ha ocurrido un error en nuestra base de datos");
+                UsuarioEntity usuarioEntity = userDao.getUserByEmail(usuario.getEmail());
+                if(usuarioEntity!=null){
+                    if(passwordHash.validatePassword(usuario.getPassword(), usuarioEntity.getPassword())){
+                        if(usuarioEntity.getActivado()){
+                            usuarioDtoGet=modelMapper.map(usuarioEntity,UsuarioDtoGet.class);
+                        }else{
+                            throw new ServerException(HttpURLConnection.HTTP_FORBIDDEN, "La cuenta no está activada");
                         }
-
-                    } else {
-                        throw new ServerException(HttpURLConnection.HTTP_FORBIDDEN, "La cuenta no está activada");
+                    }else{
+                        throw new ServerException(HttpURLConnection.HTTP_UNAUTHORIZED, "La contraseña no es correcta");
                     }
-                } else {
-                    throw new ServerException(HttpURLConnection.HTTP_UNAUTHORIZED, "La contraseña no es correcta");
+                }else{
+                    throw new ServerException(HttpURLConnection.HTTP_NOT_FOUND, "El usuario o la contraseña son incorrectos");
                 }
             } catch (NoSuchAlgorithmException e) {
                 Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
@@ -141,9 +149,9 @@ public class ServiciosUsuario {
             throw new ServerException(HttpURLConnection.HTTP_BAD_REQUEST, erroresValidacion);
         }
 
-        return usuarioDTO;
+        return usuarioDtoGet;
     }
-    */
+
 
     public int activarCuenta(String email, String codigoActivacion) throws ServerException {
         int result;
