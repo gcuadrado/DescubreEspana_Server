@@ -47,7 +47,7 @@ public class UserDao {
             if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
             }
-            if (e.getCause() instanceof ConstraintViolationException) {
+            if (e instanceof ConstraintViolationException) {
                 throw new ServerException(HttpURLConnection.HTTP_CONFLICT, "Ya existe un usuario con este email");
             } else {
                 throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR, "Ha habido un error al acceder a la base de datos");
