@@ -68,6 +68,7 @@ public class RestUsuarios {
                 )
                 .compact();
 
+
         response = Response.ok(usuarioDtoGet).header("token", jws).build();
 
         return response;

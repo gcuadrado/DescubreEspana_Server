@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class UsuarioDtoGet {
     private int idUsuario;
     private String email;
+    private int tipoUsuario;
 }
