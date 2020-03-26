@@ -13,6 +13,7 @@ public class ValoracionEntity {
     private PuntoInteresEntity puntoInteresByIdPuntoInteres;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_valoracion")
     public int getIdValoracion() {
         return idValoracion;

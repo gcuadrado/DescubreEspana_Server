@@ -26,6 +26,7 @@ public class PuntoInteresEntity {
     private UsuarioEntity usuarioByIdUsuario;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_punto_interes")
     public int getIdPuntoInteres() {
         return idPuntoInteres;

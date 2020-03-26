@@ -12,6 +12,7 @@ public class FotoPuntoInteresEntity {
     private PuntoInteresEntity puntoInteresByIdPuntoInteres;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_foto")
     public int getIdFoto() {
         return idFoto;
