@@ -2,6 +2,7 @@ package servicios;
 
 import dao.ValoracionDao;
 import modelo.ServerException;
+import modelo.dto.UsuarioDtoGet;
 import modelo.dto.ValoracionDto;
 import modelo.entity.PuntoInteresEntity;
 import modelo.entity.UsuarioEntity;
@@ -27,8 +28,10 @@ public class ServiciosValoraciones {
         return valoracionDao.getAll().stream().map(valoracion -> modelMapper.map(valoracion, ValoracionDto.class)).collect(Collectors.toList());
     }
 
-    public ValoracionDto save(ValoracionDto valoracion) throws ServerException {
+    public ValoracionDto save(ValoracionDto valoracion, UsuarioDtoGet usuarioDtoGet) throws ServerException {
         String erroresValidacion = validacion.validarObjeto(valoracion);
+        //Se añade el usuario actual loggeado en servidor, por si hackean el cliente
+        valoracion.setUsuarioByIdUsuario(usuarioDtoGet);
         ValoracionDto valoracionInsertada = null;
         if (erroresValidacion.length() == 0) {
 

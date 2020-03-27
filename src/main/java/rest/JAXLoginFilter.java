@@ -8,6 +8,7 @@ import io.jsonwebtoken.lang.Maps;
 import modelo.ApiError;
 import modelo.dto.UsuarioDtoGet;
 import seguridad.AlmacenarClavesServidor;
+import utils.Constantes;
 
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
@@ -48,7 +49,7 @@ public class JAXLoginFilter implements ContainerRequestFilter {
 
             UsuarioDtoGet userLogged = jws.getBody().get("user", UsuarioDtoGet.class);
             if (userLogged != null) {
-                httpServletRequest.setAttribute("currentUser", userLogged);
+                httpServletRequest.setAttribute(Constantes.CURRENT_USER, userLogged);
             } else {
                 containerRequestContext.abortWith(Response.status(Response.Status.FORBIDDEN.getStatusCode()).entity(new ApiError(HttpURLConnection.HTTP_FORBIDDEN, "No se encuentra el usuario")).build());
             }
