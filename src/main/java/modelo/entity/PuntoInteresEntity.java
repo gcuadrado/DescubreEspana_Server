@@ -23,6 +23,7 @@ public class PuntoInteresEntity {
     private String enlaceInfo;
     private String contacto;
     private Collection<FotoPuntoInteresEntity> fotoPuntoInteresByIdPuntoInteres;
+    private Collection<ValoracionEntity> valoraciones;
     private UsuarioEntity usuarioByIdUsuario;
 
     @Id
@@ -220,5 +221,14 @@ public class PuntoInteresEntity {
 
     public void setUsuarioByIdUsuario(UsuarioEntity usuarioByIdUsuario) {
         this.usuarioByIdUsuario = usuarioByIdUsuario;
+    }
+
+    @OneToMany(mappedBy = "puntoInteresByIdPuntoInteres")
+    public Collection<ValoracionEntity> getValoraciones() {
+        return valoraciones;
+    }
+
+    public void setValoraciones(Collection<ValoracionEntity> valoraciones) {
+        this.valoraciones = valoraciones;
     }
 }

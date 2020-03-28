@@ -24,8 +24,8 @@ public class ServiciosValoraciones {
     private ModelMapper modelMapper;
 
 
-    public List<ValoracionDto> getAll() throws ServerException {
-        return valoracionDao.getAll().stream().map(valoracion -> modelMapper.map(valoracion, ValoracionDto.class)).collect(Collectors.toList());
+    public List<ValoracionDto> getAll(int id) throws ServerException {
+        return valoracionDao.getAll(id).stream().map(valoracion -> modelMapper.map(valoracion, ValoracionDto.class)).collect(Collectors.toList());
     }
 
     public ValoracionDto save(ValoracionDto valoracion, UsuarioDtoGet usuarioDtoGet) throws ServerException {

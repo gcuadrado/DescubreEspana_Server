@@ -28,5 +28,6 @@ public class PuntoInteresDtoGetDetalle {
     private String enlaceInfo;
     private String contacto;
     private Collection<FotoPuntoInteresDtoGet> fotoPuntoInteresByIdPuntoInteres;
+    private Collection<ValoracionDto> valoraciones;
     private UsuarioDtoGet usuarioByIdUsuario;
 }

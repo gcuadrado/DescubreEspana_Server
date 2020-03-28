@@ -4,6 +4,7 @@ import modelo.ServerException;
 import modelo.dto.ValoracionDto;
 import modelo.entity.ValoracionEntity;
 import org.hibernate.Session;
+import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.query.Query;
 import org.modelmapper.ModelMapper;
 import utils.HibernateUtil;
@@ -20,11 +21,12 @@ public class ValoracionDao {
     @Inject
     private ModelMapper modelMapper;
 
-    public List<ValoracionEntity> getAll() {
+    public List<ValoracionEntity> getAll(int id) {
         List<ValoracionEntity> valoracionEntities = new ArrayList<>();
         try {
             session = HibernateUtil.getSession();
-            Query query = session.createQuery("from ValoracionEntity ");
+            Query query = session.createQuery("from ValoracionEntity v where v.puntoInteresByIdPuntoInteres.id=:id");
+            query.setParameter("id", id);
             valoracionEntities = query.list();
         } catch (Exception e) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
@@ -55,8 +57,11 @@ public class ValoracionDao {
             if (session.getTransaction() != null) {
                 session.getTransaction().rollback();
             }
-
-            throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR, "Ha habido un error al acceder a la base de datos");
+            if (e instanceof ConstraintViolationException) {
+                throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR, "Ya has publicado una valoración para este punto de interés");
+            } else {
+                throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR, "Ha habido un error al acceder a la base de datos");
+            }
         } finally {
             session.close();
         }

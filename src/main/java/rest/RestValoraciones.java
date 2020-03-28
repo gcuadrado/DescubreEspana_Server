@@ -23,9 +23,9 @@ public class RestValoraciones {
     private HttpServletRequest httpServletRequest;
 
     @GET
-    public Response getValoraciones() {
+    public Response getValoraciones(@QueryParam("poi_id") int id) {
         Response response;
-        List<ValoracionDto> usuarios = serviciosValoraciones.getAll();
+        List<ValoracionDto> usuarios = serviciosValoraciones.getAll(id);
         response = Response.ok(usuarios).build();
         return response;
     }
