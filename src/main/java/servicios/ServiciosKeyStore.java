@@ -1,24 +1,15 @@
 package servicios;
 
 import modelo.dto.UsuarioDtoPost;
-import sun.security.tools.keytool.CertAndKeyGen;
-import sun.security.x509.X500Name;
-import sun.security.x509.X509CertImpl;
-import sun.security.x509.X509CertInfo;
 
 import javax.servlet.ServletContext;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyFactory;
-import java.security.KeyStore;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
-import java.security.cert.Certificate;
-import java.security.cert.X509Certificate;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
-import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,7 +17,7 @@ public class ServiciosKeyStore {
     public String generarKeyStoreCliente(UsuarioDtoPost usuarioDtoPost, ServletContext context){
         String keyStoreString=null;
         try {
-            CertAndKeyGen certGen = new CertAndKeyGen("RSA", "SHA256WithRSA", null);
+         /*   CertAndKeyGen certGen = new CertAndKeyGen("RSA", "SHA256WithRSA", null);
             // generate it with 2048 bits
             certGen.generate(2048);
             // prepare the validity of the certificate
@@ -63,7 +54,7 @@ public class ServiciosKeyStore {
             ks.store(fos, password);
             //Codificamos el array de bytes en base64 para poder enviarlo por HTTP
             keyStoreString=Base64.getUrlEncoder().encodeToString(fos.toByteArray());
-            fos.close();
+            fos.close();*/
 
         } catch (Exception e) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
