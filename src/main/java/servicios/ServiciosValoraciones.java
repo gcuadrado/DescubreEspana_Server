@@ -1,5 +1,6 @@
 package servicios;
 
+import com.google.common.primitives.Ints;
 import dao.ValoracionDao;
 import modelo.ServerException;
 import modelo.dto.UsuarioDtoGet;
@@ -48,5 +49,16 @@ public class ServiciosValoraciones {
             throw new ServerException(HttpURLConnection.HTTP_BAD_REQUEST, erroresValidacion);
         }
         return valoracionInsertada;
+    }
+
+    public boolean delete(String valoracionId, UsuarioDtoGet usuarioDtoGet) throws ServerException {
+        boolean borrado = false;
+        Integer id = Ints.tryParse(valoracionId);
+        if (id != null) {
+            borrado = valoracionDao.delete(id,usuarioDtoGet.getIdUsuario());
+        }else{
+            throw new ServerException(HttpURLConnection.HTTP_BAD_REQUEST, "El ID no es un número");
+        }
+        return borrado;
     }
 }

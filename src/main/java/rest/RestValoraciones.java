@@ -39,4 +39,15 @@ public class RestValoraciones {
         response = Response.status(Response.Status.CREATED).entity(valoracionDtoInsertado).build();
         return response;
     }
+
+    @Privado
+    @DELETE
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response borrarValoracion(@QueryParam("id") String id) {
+        Response response;
+        UsuarioDtoGet usuarioDtoGet= (UsuarioDtoGet) httpServletRequest.getAttribute(Constantes.CURRENT_USER);
+        serviciosValoraciones.delete(id,usuarioDtoGet);
+        response = Response.ok(Constantes.OK).build();
+        return response;
+    }
 }
