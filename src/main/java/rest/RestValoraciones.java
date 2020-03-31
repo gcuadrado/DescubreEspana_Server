@@ -22,6 +22,7 @@ public class RestValoraciones {
     @Context
     private HttpServletRequest httpServletRequest;
 
+
     @GET
     public Response getValoraciones(@QueryParam("poi_id") int id) {
         Response response;

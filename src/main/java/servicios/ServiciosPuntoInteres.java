@@ -5,6 +5,9 @@ import dao.PuntosInteresDao;
 import modelo.ServerException;
 import modelo.dto.PuntoInteresDtoGetDetalle;
 import modelo.dto.PuntoInteresDtoGetMaestro;
+import modelo.dto.UsuarioDtoGet;
+import modelo.entity.PuntoInteresEntity;
+import modelo.entity.UsuarioEntity;
 import org.modelmapper.ModelMapper;
 
 import javax.inject.Inject;
@@ -31,5 +34,11 @@ public class ServiciosPuntoInteres {
             throw new ServerException(HttpURLConnection.HTTP_BAD_REQUEST, "El ID no es un número");
         }
         return puntoInteresDtoGetDetalle;
+    }
+
+    public PuntoInteresDtoGetDetalle insert(PuntoInteresDtoGetDetalle poi, UsuarioDtoGet usuarioDtoGet) {
+       PuntoInteresEntity poiEntity= modelMapper.map(poi, PuntoInteresEntity.class);
+       poiEntity.setUsuarioByIdUsuario(modelMapper.map(usuarioDtoGet, UsuarioEntity.class));
+       return modelMapper.map(puntosInteresDao.save(poiEntity),PuntoInteresDtoGetDetalle.class);
     }
 }
