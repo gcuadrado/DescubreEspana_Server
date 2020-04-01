@@ -9,6 +9,7 @@ import modelo.dto.UsuarioDtoGet;
 import modelo.entity.PuntoInteresEntity;
 import modelo.entity.UsuarioEntity;
 import org.modelmapper.ModelMapper;
+import utils.ValidacionTool;
 
 import javax.inject.Inject;
 import java.net.HttpURLConnection;
@@ -20,25 +21,36 @@ public class ServiciosPuntoInteres {
     private PuntosInteresDao puntosInteresDao;
     @Inject
     private ModelMapper modelMapper;
+    @Inject
+    private ValidacionTool validacionTool;
 
     public List<PuntoInteresDtoGetMaestro> getAll() throws ServerException {
-        return puntosInteresDao.getAll().stream().map(poi -> modelMapper.map(poi,PuntoInteresDtoGetMaestro.class)).collect(Collectors.toList());
+        return puntosInteresDao.getAll().stream().map(poi -> modelMapper.map(poi, PuntoInteresDtoGetMaestro.class)).collect(Collectors.toList());
     }
 
     public PuntoInteresDtoGetDetalle get(String idPunto) throws ServerException {
         PuntoInteresDtoGetDetalle puntoInteresDtoGetDetalle = null;
         Integer id = Ints.tryParse(idPunto);
         if (id != null) {
-            puntoInteresDtoGetDetalle = modelMapper.map(puntosInteresDao.get(id),PuntoInteresDtoGetDetalle.class);
-        }else{
+            puntoInteresDtoGetDetalle = modelMapper.map(puntosInteresDao.get(id), PuntoInteresDtoGetDetalle.class);
+        } else {
             throw new ServerException(HttpURLConnection.HTTP_BAD_REQUEST, "El ID no es un número");
         }
         return puntoInteresDtoGetDetalle;
     }
 
     public PuntoInteresDtoGetDetalle insert(PuntoInteresDtoGetDetalle poi, UsuarioDtoGet usuarioDtoGet) {
-       PuntoInteresEntity poiEntity= modelMapper.map(poi, PuntoInteresEntity.class);
-       poiEntity.setUsuarioByIdUsuario(modelMapper.map(usuarioDtoGet, UsuarioEntity.class));
-       return modelMapper.map(puntosInteresDao.save(poiEntity),PuntoInteresDtoGetDetalle.class);
+        String erroresValidacion = validacionTool.validarObjeto(poi);
+        if (erroresValidacion.length() == 0) {
+            PuntoInteresEntity poiEntity = modelMapper.map(poi, PuntoInteresEntity.class);
+            poiEntity.setUsuarioByIdUsuario(modelMapper.map(usuarioDtoGet, UsuarioEntity.class));
+            return modelMapper.map(puntosInteresDao.save(poiEntity), PuntoInteresDtoGetDetalle.class);
+        } else {
+            throw new ServerException(HttpURLConnection.HTTP_BAD_REQUEST, erroresValidacion);
+        }
+    }
+
+    public List<PuntoInteresDtoGetMaestro> getAllSinActivar() {
+        return puntosInteresDao.getAllSinActivar().stream().map(poi -> modelMapper.map(poi, PuntoInteresDtoGetMaestro.class)).collect(Collectors.toList());
     }
 }

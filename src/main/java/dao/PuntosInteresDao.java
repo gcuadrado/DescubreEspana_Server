@@ -19,7 +19,7 @@ public class PuntosInteresDao {
         List<PuntoInteresEntity> puntoInteresEntities = new ArrayList<>();
         try {
             session = HibernateUtil.getSession();
-            Query query = session.createQuery("from PuntoInteresEntity");
+            Query query = session.createQuery("from PuntoInteresEntity p where p.activado=true");
             puntoInteresEntities = query.list();
         } catch (Exception e) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
@@ -65,5 +65,20 @@ public class PuntosInteresDao {
             session.close();
         }
         return  poiEntity;
+    }
+
+    public List<PuntoInteresEntity> getAllSinActivar() {
+        List<PuntoInteresEntity> puntoInteresEntities = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSession();
+            Query query = session.createQuery("from PuntoInteresEntity p where p.activado=false");
+            puntoInteresEntities = query.list();
+        } catch (Exception e) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
+            throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR,"Ha habido un error al acceder a la base de datos");
+        } finally {
+            session.close();
+        }
+        return puntoInteresEntities;
     }
 }

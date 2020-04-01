@@ -1,5 +1,6 @@
 package rest;
 
+import modelo.dto.FotoPuntoInteresDtoGet;
 import modelo.dto.PuntoInteresDtoGetDetalle;
 import modelo.dto.PuntoInteresDtoGetMaestro;
 import modelo.dto.UsuarioDtoGet;
@@ -46,6 +47,17 @@ public class RestPuntosInteres {
     }
 
     @GET
+    @Privado
+    @AdminOnly
+    @Path("/administrar")
+    public Response getPuntosSinActivar() {
+        Response response;
+        List<PuntoInteresDtoGetMaestro> usuarios = serviciosPuntoInteres.getAllSinActivar();
+        response = Response.ok(usuarios).build();
+        return response;
+    }
+
+    @GET
     @Path("/{id}")
     public Response getPuntoInteres(@PathParam("id") String id) {
         Response response;
@@ -53,6 +65,8 @@ public class RestPuntosInteres {
         response = Response.ok(puntoInteresDtoGetDetalle).build();
         return response;
     }
+
+
 
     @Privado
     @POST
@@ -63,11 +77,8 @@ public class RestPuntosInteres {
 
         poi=serviciosPuntoInteres.insert(poi,usuarioDtoGet);
         List<FormDataBodyPart> imagenes=multiPart.getFields("image");
-        serviciosFotos.insertFoto(imagenes,poi.getIdPuntoInteres());
-
-
-
-
+        List<FotoPuntoInteresDtoGet> fotosInsertadas=serviciosFotos.insertFoto(imagenes,poi.getIdPuntoInteres());
+        poi.setFotoPuntoInteresByIdPuntoInteres(fotosInsertadas);
 
         return Response.status(Response.Status.CREATED).entity(poi).build();
     }

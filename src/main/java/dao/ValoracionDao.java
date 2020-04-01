@@ -8,6 +8,7 @@ import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.query.Query;
 import org.modelmapper.ModelMapper;
+import utils.Constantes;
 import utils.HibernateUtil;
 
 import javax.inject.Inject;
@@ -83,9 +84,10 @@ public class ValoracionDao {
         try {
             session = HibernateUtil.getSession();
             transaction = session.beginTransaction();
-            Query query = session.createQuery("from ValoracionEntity v where v.idValoracion = :id and v.usuarioByIdUsuario.id=:userId");
+            Query query = session.createQuery("from ValoracionEntity v where v.idValoracion = :id and (v.usuarioByIdUsuario.id=:userId or (select u.tipoUsuario from UsuarioEntity  u where u.id=:userId)=:adminNumber)");
             query.setParameter("id", id);
             query.setParameter("userId", userId);
+            query.setParameter("adminNumber", Constantes.ADMIN_USER);
             ValoracionEntity valoracionEntity = (ValoracionEntity) query.uniqueResult();
             if (valoracionEntity != null) {
                 session.delete(valoracionEntity);

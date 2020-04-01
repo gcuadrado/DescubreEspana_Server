@@ -22,6 +22,7 @@ public class PuntoInteresEntity {
     private Double longitud;
     private String enlaceInfo;
     private String contacto;
+    private Boolean activado;
     private Collection<FotoPuntoInteresEntity> fotoPuntoInteresByIdPuntoInteres;
     private Collection<ValoracionEntity> valoraciones;
     private UsuarioEntity usuarioByIdUsuario;
@@ -175,6 +176,16 @@ public class PuntoInteresEntity {
 
     public void setContacto(String contacto) {
         this.contacto = contacto;
+    }
+
+    @Basic
+    @Column(name = "activado")
+    public Boolean getActivado() {
+        return activado;
+    }
+
+    public void setActivado(Boolean activado) {
+        this.activado = activado;
     }
 
     @Override

@@ -8,6 +8,6 @@ public class Constantes {
     public static final int SUCCESS = 1;
     public static final int TIEMPO_ACTIVACION_EXPIRADO = 2;
     public static final String CURRENT_USER = "currentUser";
-    public static int ADMIN_USER=0;
-    public static int STANDARD_USER=1;
+    public static final int ADMIN_USER=2;
+    public static final int STANDARD_USER=1;
 }

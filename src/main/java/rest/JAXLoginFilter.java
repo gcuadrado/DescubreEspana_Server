@@ -10,6 +10,7 @@ import modelo.dto.UsuarioDtoGet;
 import seguridad.AlmacenarClavesServidor;
 import utils.Constantes;
 
+import javax.annotation.Priority;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +26,7 @@ import java.security.PublicKey;
 
 @Provider
 @Privado
+@Priority(1)
 public class JAXLoginFilter implements ContainerRequestFilter {
 
 
