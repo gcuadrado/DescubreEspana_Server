@@ -66,18 +66,39 @@ public class RestPuntosInteres {
         return response;
     }
 
+    @PUT
+    @Privado
+    @AdminOnly
+    @Path("/administrar/{id}")
+    public Response activarPunto(@PathParam("id") int id) {
+        Response response;
+         serviciosPuntoInteres.activar(id);
+        response = Response.ok(Constantes.OK).build();
+        return response;
+    }
+
+    @DELETE
+    @Privado
+    @AdminOnly
+    @Path("/administrar/{id}")
+    public Response borrarPunto(@PathParam("id") int id) {
+        Response response;
+        serviciosPuntoInteres.borrarPunto(id);
+        response = Response.ok(Constantes.OK).build();
+        return response;
+    }
 
 
     @Privado
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response addPuntoInteres(FormDataMultiPart multiPart) throws IOException {
-        UsuarioDtoGet usuarioDtoGet= (UsuarioDtoGet) httpServletRequest.getAttribute(Constantes.CURRENT_USER);
+        UsuarioDtoGet usuarioDtoGet = (UsuarioDtoGet) httpServletRequest.getAttribute(Constantes.CURRENT_USER);
         PuntoInteresDtoGetDetalle poi = jsonb.fromJson(((BodyPartEntity) multiPart.getField("data").getEntity()).getInputStream(), PuntoInteresDtoGetDetalle.class);
 
-        poi=serviciosPuntoInteres.insert(poi,usuarioDtoGet);
-        List<FormDataBodyPart> imagenes=multiPart.getFields("image");
-        List<FotoPuntoInteresDtoGet> fotosInsertadas=serviciosFotos.insertFoto(imagenes,poi.getIdPuntoInteres());
+        poi = serviciosPuntoInteres.insert(poi, usuarioDtoGet);
+        List<FormDataBodyPart> imagenes = multiPart.getFields("image");
+        List<FotoPuntoInteresDtoGet> fotosInsertadas = serviciosFotos.insertFoto(imagenes, poi.getIdPuntoInteres());
         poi.setFotoPuntoInteresByIdPuntoInteres(fotosInsertadas);
 
         return Response.status(Response.Status.CREATED).entity(poi).build();

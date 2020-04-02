@@ -6,10 +6,12 @@ import modelo.ServerException;
 import modelo.dto.FotoPuntoInteresDtoGet;
 import modelo.entity.FotoPuntoInteresEntity;
 import modelo.entity.PuntoInteresEntity;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.glassfish.jersey.media.multipart.BodyPartEntity;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.modelmapper.ModelMapper;
+import utils.Constantes;
 
 import javax.inject.Inject;
 import java.io.File;
@@ -31,7 +33,7 @@ public class ServiciosFotos {
 
         List<FotoPuntoInteresEntity> fotos = IntStream.range(0, imagenes.size()).mapToObj(i -> {
             //Obtenemos el path relativo de cada foto
-            String path = File.separator + "uploads" + File.separator + String.valueOf(poiId) + File.separator + i + "." + Files.getFileExtension(imagenes.get(i).getContentDisposition().getFileName());
+            String path = File.separator + "uploads" + File.separator + poiId + File.separator + i + "." + Files.getFileExtension(imagenes.get(i).getContentDisposition().getFileName());
            //Guardamos en el disco duro del servidor los archivos
             try {
                 InputStream inputStream = ((BodyPartEntity) imagenes.get(i).getEntity()).getInputStream();
@@ -58,7 +60,7 @@ public class ServiciosFotos {
     }
 
     private void guardarImagenEnDisco(String path, InputStream inputStream) throws IOException {
-        File file = new File(System.getProperty("catalina.base") + File.separator + "docroot" + path);
+        File file = new File(Constantes.PATH_DOCROOT + path);
         if (file.getParent() != null && !file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
@@ -69,5 +71,16 @@ public class ServiciosFotos {
             fos.write(bytes, 0, read);
         }
         fos.close();
+    }
+
+    public boolean borrarDirectorioFotosPoi(int id) {
+        boolean borradas=false;
+        try {
+            FileUtils.deleteDirectory(new File(Constantes.PATH_POI_FOLDER + id));
+            borradas=true;
+        }catch (Exception e){
+            throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR,"Error al eliminar las imágenes del disco duro");
+        }
+        return borradas;
     }
 }

@@ -14,4 +14,5 @@ public class PuntoInteresDtoGetMaestro {
     private String nombre;
     private Double latitud;
     private Double longitud;
+    private Boolean activado;
 }

@@ -1,5 +1,7 @@
 package utils;
 
+import java.io.File;
+
 public class Constantes {
     public static final String EMAIL_PARAMETER = "email";
     public static final String OK = "ok";
@@ -10,4 +12,6 @@ public class Constantes {
     public static final String CURRENT_USER = "currentUser";
     public static final int ADMIN_USER=2;
     public static final int STANDARD_USER=1;
+    public static final String PATH_DOCROOT = System.getProperty("catalina.base") + File.separator + "docroot";
+    public static final String PATH_POI_FOLDER=PATH_DOCROOT+ File.separator + "uploads" + File.separator;
 }
