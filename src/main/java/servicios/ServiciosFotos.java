@@ -2,6 +2,7 @@ package servicios;
 
 import com.google.common.io.Files;
 import dao.FotosDao;
+import dao.PuntosInteresDao;
 import modelo.ServerException;
 import modelo.dto.FotoPuntoInteresDtoGet;
 import modelo.entity.FotoPuntoInteresEntity;
@@ -24,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -31,13 +33,15 @@ public class ServiciosFotos {
     @Inject
     private FotosDao fotosDao;
     @Inject
+    private PuntosInteresDao puntosInteresDao;
+    @Inject
     private ModelMapper modelMapper;
 
-    public List<FotoPuntoInteresDtoGet> insertFoto(List<FormDataBodyPart> imagenes, int poiId) {
+    public List<FotoPuntoInteresDtoGet> insertFoto(List<FormDataBodyPart> imagenes, String folderUUID, int poiId) {
 
         List<FotoPuntoInteresEntity> fotos = IntStream.range(0, imagenes.size()).mapToObj(i -> {
             //Obtenemos el path relativo de cada foto
-            String path = "/uploads/" + poiId + "/" + i + "." + Files.getFileExtension(imagenes.get(i).getContentDisposition().getFileName());
+            String path = "/uploads/" + folderUUID + "/" + UUID.randomUUID() + "." + Files.getFileExtension(imagenes.get(i).getContentDisposition().getFileName());
            //Guardamos en el disco duro del servidor los archivos
             try {
                 InputStream inputStream = ((BodyPartEntity) imagenes.get(i).getEntity()).getInputStream();
@@ -88,7 +92,8 @@ public class ServiciosFotos {
             file.getParentFile().mkdirs();
         }
 
-        Thumbnails.of(inputStream)
+        //Se redimensiona la imagen a 150X150px, menos espacio, menos tiempo de carga
+        Thumbnails.of(inputImage)
                 .size(150,150)
                 .outputFormat(FilenameUtils.getExtension(path))
                 .toFile(file);
@@ -99,7 +104,8 @@ public class ServiciosFotos {
     public boolean borrarDirectorioFotosPoi(int id) {
         boolean borradas=false;
         try {
-            FileUtils.deleteDirectory(new File(Constantes.PATH_POI_FOLDER + id));
+            String uuidFolder=puntosInteresDao.get(id).getUuid_folder_filename();
+            FileUtils.deleteDirectory(new File(Constantes.PATH_POI_FOLDER + uuidFolder));
             borradas=true;
         }catch (Exception e){
             throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR,"Error al eliminar las imágenes del disco duro");

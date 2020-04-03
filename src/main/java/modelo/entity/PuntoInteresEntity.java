@@ -24,6 +24,7 @@ public class PuntoInteresEntity {
     private String enlaceInfo;
     private String contacto;
     private Boolean activado;
+    private String uuid_folder_filename;
     private Collection<FotoPuntoInteresEntity> fotoPuntoInteresByIdPuntoInteres;
     private Collection<ValoracionEntity> valoraciones;
     private UsuarioEntity usuarioByIdUsuario;
@@ -197,6 +198,16 @@ public class PuntoInteresEntity {
 
     public void setActivado(Boolean activado) {
         this.activado = activado;
+    }
+
+    @Basic
+    @Column(name = "uuid_folder_filename")
+    public String getUuid_folder_filename() {
+        return uuid_folder_filename;
+    }
+
+    public void setUuid_folder_filename(String uuid_folder_filename) {
+        this.uuid_folder_filename = uuid_folder_filename;
     }
 
     @Override

@@ -53,9 +53,6 @@ public class PuntosInteresDao {
             session = HibernateUtil.getSession();
             session.beginTransaction();
             session.save(poiEntity);
-            String path = "/uploads/" + poiEntity.getIdPuntoInteres() +  "/principal." + fileExtension;
-            poiEntity.setPath_imagen_principal(path);
-            session.save(poiEntity);
             session.getTransaction().commit();
 
         } catch (Exception e) {

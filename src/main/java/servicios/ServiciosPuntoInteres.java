@@ -4,6 +4,7 @@ import com.google.common.io.Files;
 import com.google.common.primitives.Ints;
 import dao.PuntosInteresDao;
 import modelo.ServerException;
+import modelo.dto.FotoPuntoInteresDtoGet;
 import modelo.dto.PuntoInteresDtoGetDetalle;
 import modelo.dto.PuntoInteresDtoGetMaestro;
 import modelo.dto.UsuarioDtoGet;
@@ -18,6 +19,7 @@ import javax.inject.Inject;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class ServiciosPuntoInteres {
@@ -45,7 +47,7 @@ public class ServiciosPuntoInteres {
         return puntoInteresDtoGetDetalle;
     }
 
-    public PuntoInteresDtoGetDetalle insert(PuntoInteresDtoGetDetalle poi, UsuarioDtoGet usuarioDtoGet, FormDataBodyPart imagenPrincipal) {
+    public PuntoInteresDtoGetDetalle insert(PuntoInteresDtoGetDetalle poi, UsuarioDtoGet usuarioDtoGet, FormDataBodyPart imagenPrincipal, List<FormDataBodyPart> imagenes) {
         String erroresValidacion = validacionTool.validarObjeto(poi);
         if (erroresValidacion.length() == 0) {
             //Guardamos el POI en BBDD
@@ -54,14 +56,28 @@ public class ServiciosPuntoInteres {
             poiEntity.setUsuarioByIdUsuario(modelMapper.map(usuarioDtoGet, UsuarioEntity.class));
             //Fijamos la activacion el false
             poiEntity.setActivado(false);
-            PuntoInteresEntity poiInsertado=puntosInteresDao.save(poiEntity, Files.getFileExtension(imagenPrincipal.getContentDisposition().getFileName()));
+            //Creamos un UUID aleatorio para el nombre de la carpeta que albergará las fotos de este POI
+            String uuidFolder= UUID.randomUUID().toString();
+            poiEntity.setUuid_folder_filename(uuidFolder);
+            //Creamos el path que tendrá la imagen principal en el disco duro y se lo añadimos al POI
+            String path = "/uploads/" + uuidFolder + "/" + "principal." + Files.getFileExtension(imagenPrincipal.getContentDisposition().getFileName());
+            poiEntity.setPath_imagen_principal(path);
+            //Guardamos la imagen principal en disco
             try {
                 InputStream inputStream = ((BodyPartEntity) imagenPrincipal.getEntity()).getInputStream();
-                serviciosFotos.guardarImagenPrincipalEnDisco(poiInsertado.getPath_imagen_principal(), inputStream);
+                serviciosFotos.guardarImagenPrincipalEnDisco(path, inputStream);
             }catch (Exception e){
                 throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR,"Error al guardar la imagen principal en disco");
             }
-            return modelMapper.map(poiInsertado, PuntoInteresDtoGetDetalle.class);
+            //Insertamos el POI en BBDD
+            PuntoInteresEntity poiInsertado=puntosInteresDao.save(poiEntity, Files.getFileExtension(imagenPrincipal.getContentDisposition().getFileName()));
+           //Insertamos las fotos en BBDD
+            List<FotoPuntoInteresDtoGet> fotosInsertadas=serviciosFotos.insertFoto(imagenes,uuidFolder, poiInsertado.getIdPuntoInteres());
+           //Devolvemos el dto del POI insertado, con sus fotos añadidas
+            PuntoInteresDtoGetDetalle poiDtoInsertado=modelMapper.map(poiInsertado, PuntoInteresDtoGetDetalle.class);
+            poiDtoInsertado.setFotoPuntoInteresByIdPuntoInteres(fotosInsertadas);
+
+            return poiDtoInsertado;
         } else {
             throw new ServerException(HttpURLConnection.HTTP_BAD_REQUEST, erroresValidacion);
         }
@@ -77,8 +93,8 @@ public class ServiciosPuntoInteres {
 
     public boolean borrarPunto(int id){
         boolean borrado=false;
-        if(puntosInteresDao.delete(id)){
-            serviciosFotos.borrarDirectorioFotosPoi(id);
+        //Primero se borra el directorio de las fotos, porque para saber su nombre tenemos que verlo en la BBDD
+        if(serviciosFotos.borrarDirectorioFotosPoi(id) && puntosInteresDao.delete(id)){
             borrado=true;
         }
         return true;

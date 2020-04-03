@@ -1,6 +1,5 @@
 package rest;
 
-import modelo.dto.FotoPuntoInteresDtoGet;
 import modelo.dto.PuntoInteresDtoGetDetalle;
 import modelo.dto.PuntoInteresDtoGetMaestro;
 import modelo.dto.UsuarioDtoGet;
@@ -93,16 +92,17 @@ public class RestPuntosInteres {
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response addPuntoInteres(FormDataMultiPart multiPart) throws IOException {
+        //Cogemos el usuario actual en sesión
         UsuarioDtoGet usuarioDtoGet = (UsuarioDtoGet) httpServletRequest.getAttribute(Constantes.CURRENT_USER);
+        //Cogemos el poi desde el form
         PuntoInteresDtoGetDetalle poi = jsonb.fromJson(((BodyPartEntity) multiPart.getField("data").getEntity()).getInputStream(), PuntoInteresDtoGetDetalle.class);
+        //Cogemos la imagen principal desde el form
         FormDataBodyPart imagenPrincipal=multiPart.getField("imagenPrincipal");
+        //Cogemos la lista de imágenes desde el form
         List<FormDataBodyPart> imagenes = multiPart.getFields("image");
-
-
-        poi = serviciosPuntoInteres.insert(poi, usuarioDtoGet, imagenPrincipal);
-        List<FotoPuntoInteresDtoGet> fotosInsertadas = serviciosFotos.insertFoto(imagenes, poi.getIdPuntoInteres());
-        poi.setFotoPuntoInteresByIdPuntoInteres(fotosInsertadas);
-
+        //Insertamos el punto y sus imágenes
+        poi = serviciosPuntoInteres.insert(poi, usuarioDtoGet, imagenPrincipal, imagenes);
+        //Devolvemos el punto ya insertado
         return Response.status(Response.Status.CREATED).entity(poi).build();
     }
 }
