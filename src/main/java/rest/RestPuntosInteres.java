@@ -95,9 +95,11 @@ public class RestPuntosInteres {
     public Response addPuntoInteres(FormDataMultiPart multiPart) throws IOException {
         UsuarioDtoGet usuarioDtoGet = (UsuarioDtoGet) httpServletRequest.getAttribute(Constantes.CURRENT_USER);
         PuntoInteresDtoGetDetalle poi = jsonb.fromJson(((BodyPartEntity) multiPart.getField("data").getEntity()).getInputStream(), PuntoInteresDtoGetDetalle.class);
-
-        poi = serviciosPuntoInteres.insert(poi, usuarioDtoGet);
+        FormDataBodyPart imagenPrincipal=multiPart.getField("imagenPrincipal");
         List<FormDataBodyPart> imagenes = multiPart.getFields("image");
+
+
+        poi = serviciosPuntoInteres.insert(poi, usuarioDtoGet, imagenPrincipal);
         List<FotoPuntoInteresDtoGet> fotosInsertadas = serviciosFotos.insertFoto(imagenes, poi.getIdPuntoInteres());
         poi.setFotoPuntoInteresByIdPuntoInteres(fotosInsertadas);
 

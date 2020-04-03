@@ -6,14 +6,18 @@ import modelo.ServerException;
 import modelo.dto.FotoPuntoInteresDtoGet;
 import modelo.entity.FotoPuntoInteresEntity;
 import modelo.entity.PuntoInteresEntity;
+import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.glassfish.jersey.media.multipart.BodyPartEntity;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.imgscalr.Scalr;
 import org.modelmapper.ModelMapper;
 import utils.Constantes;
 
+import javax.imageio.ImageIO;
 import javax.inject.Inject;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -33,7 +37,7 @@ public class ServiciosFotos {
 
         List<FotoPuntoInteresEntity> fotos = IntStream.range(0, imagenes.size()).mapToObj(i -> {
             //Obtenemos el path relativo de cada foto
-            String path = File.separator + "uploads" + File.separator + poiId + File.separator + i + "." + Files.getFileExtension(imagenes.get(i).getContentDisposition().getFileName());
+            String path = "/uploads/" + poiId + "/" + i + "." + Files.getFileExtension(imagenes.get(i).getContentDisposition().getFileName());
            //Guardamos en el disco duro del servidor los archivos
             try {
                 InputStream inputStream = ((BodyPartEntity) imagenes.get(i).getEntity()).getInputStream();
@@ -60,6 +64,7 @@ public class ServiciosFotos {
     }
 
     private void guardarImagenEnDisco(String path, InputStream inputStream) throws IOException {
+        path=FilenameUtils.separatorsToSystem(path);
         File file = new File(Constantes.PATH_DOCROOT + path);
         if (file.getParent() != null && !file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
@@ -71,6 +76,24 @@ public class ServiciosFotos {
             fos.write(bytes, 0, read);
         }
         fos.close();
+    }
+
+    public void guardarImagenPrincipalEnDisco(String path, InputStream inputStream) throws IOException {
+        BufferedImage inputImage = ImageIO.read(inputStream);
+        BufferedImage outPutImage=Scalr.resize(inputImage,150);
+        path=FilenameUtils.separatorsToSystem(path);
+        File file = new File(Constantes.PATH_DOCROOT + path);
+
+        if (file.getParent() != null && !file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
+        }
+
+        Thumbnails.of(inputStream)
+                .size(150,150)
+                .outputFormat(FilenameUtils.getExtension(path))
+                .toFile(file);
+
+        /*ImageIO.write(outPutImage,FilenameUtils.getExtension(path),file);*/
     }
 
     public boolean borrarDirectorioFotosPoi(int id) {

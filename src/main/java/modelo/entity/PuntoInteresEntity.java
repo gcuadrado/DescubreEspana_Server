@@ -9,6 +9,7 @@ import java.util.Objects;
 public class PuntoInteresEntity {
     private int idPuntoInteres;
     private String nombre;
+    private String path_imagen_principal;
     private String resumen;
     private String infoDetallada;
     private String fechaInicio;
@@ -46,6 +47,16 @@ public class PuntoInteresEntity {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    @Basic
+    @Column(name = "path_imagen_principal")
+    public String getPath_imagen_principal() {
+        return path_imagen_principal;
+    }
+
+    public void setPath_imagen_principal(String path_imagen_principal) {
+        this.path_imagen_principal = path_imagen_principal;
     }
 
     @Basic
@@ -195,6 +206,7 @@ public class PuntoInteresEntity {
         PuntoInteresEntity that = (PuntoInteresEntity) o;
         return idPuntoInteres == that.idPuntoInteres &&
                 Objects.equals(nombre, that.nombre) &&
+                Objects.equals(path_imagen_principal,that.path_imagen_principal) &&
                 Objects.equals(resumen, that.resumen) &&
                 Objects.equals(infoDetallada, that.infoDetallada) &&
                 Objects.equals(fechaInicio, that.fechaInicio) &&
@@ -207,7 +219,8 @@ public class PuntoInteresEntity {
                 Objects.equals(latitud, that.latitud) &&
                 Objects.equals(longitud, that.longitud) &&
                 Objects.equals(enlaceInfo, that.enlaceInfo) &&
-                Objects.equals(contacto, that.contacto);
+                Objects.equals(contacto, that.contacto) &&
+                Objects.equals(activado, that.activado);
     }
 
     @Override

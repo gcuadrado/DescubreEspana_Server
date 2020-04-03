@@ -14,6 +14,7 @@ import java.util.Collection;
 public class PuntoInteresDtoGetDetalle {
     private int idPuntoInteres;
     private String nombre;
+    private String path_imagen_principal;
     private String resumen;
     private String infoDetallada;
     private String fechaInicio;
