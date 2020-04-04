@@ -48,7 +48,7 @@ public class PuntosInteresDao {
         return puntoInteresEntity;
     }
 
-    public PuntoInteresEntity save(PuntoInteresEntity poiEntity, String fileExtension) {
+    public PuntoInteresEntity save(PuntoInteresEntity poiEntity) {
         try {
             session = HibernateUtil.getSession();
             session.beginTransaction();
@@ -65,6 +65,26 @@ public class PuntosInteresDao {
             session.close();
         }
         return poiEntity;
+    }
+
+    public boolean update(PuntoInteresEntity poiEntity) {
+        boolean updated=false;
+        try {
+            session = HibernateUtil.getSession();
+            session.beginTransaction();
+            session.update(poiEntity);
+            session.getTransaction().commit();
+            updated=true;
+        } catch (Exception e) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+            throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR, "Ha habido un error al acceder a la base de datos");
+        } finally {
+            session.close();
+        }
+        return updated;
     }
 
     public List<PuntoInteresEntity> getAllSinActivar() {
@@ -117,6 +137,10 @@ public class PuntosInteresDao {
         try {
             session = HibernateUtil.getSession();
             session.beginTransaction();
+
+            Query borrarValoraciones = session.createQuery("delete from ValoracionEntity v where v.puntoInteresByIdPuntoInteres.id=:id");
+            borrarValoraciones.setParameter("id",id);
+            borrarValoraciones.executeUpdate();
 
             Query borrarFotos = session.createQuery("delete from FotoPuntoInteresEntity f where f.puntoInteresByIdPuntoInteres.id=:id");
             borrarFotos.setParameter("id",id);

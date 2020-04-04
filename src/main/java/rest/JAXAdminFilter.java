@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 
 @Provider
-@Privado
+@AdminOnly
 @Priority(2)
 public class JAXAdminFilter implements ContainerRequestFilter {
 

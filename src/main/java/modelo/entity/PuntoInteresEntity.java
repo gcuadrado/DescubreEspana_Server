@@ -201,7 +201,7 @@ public class PuntoInteresEntity {
     }
 
     @Basic
-    @Column(name = "uuid_folder_filename")
+    @Column(name = "uuid_folder_filename", updatable = false)
     public String getUuid_folder_filename() {
         return uuid_folder_filename;
     }

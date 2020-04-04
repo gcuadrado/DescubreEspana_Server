@@ -70,7 +70,7 @@ public class ServiciosPuntoInteres {
                 throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR,"Error al guardar la imagen principal en disco");
             }
             //Insertamos el POI en BBDD
-            PuntoInteresEntity poiInsertado=puntosInteresDao.save(poiEntity, Files.getFileExtension(imagenPrincipal.getContentDisposition().getFileName()));
+            PuntoInteresEntity poiInsertado=puntosInteresDao.save(poiEntity);
            //Insertamos las fotos en BBDD
             List<FotoPuntoInteresDtoGet> fotosInsertadas=serviciosFotos.insertFoto(imagenes,uuidFolder, poiInsertado.getIdPuntoInteres());
            //Devolvemos el dto del POI insertado, con sus fotos añadidas
@@ -81,6 +81,18 @@ public class ServiciosPuntoInteres {
         } else {
             throw new ServerException(HttpURLConnection.HTTP_BAD_REQUEST, erroresValidacion);
         }
+    }
+
+    public boolean updatePoi(PuntoInteresDtoGetDetalle poiDto){
+        boolean updated=false;
+        String erroresValidacion = validacionTool.validarObjeto(poiDto);
+        if (erroresValidacion.length() == 0) {
+            PuntoInteresEntity poiEntity=modelMapper.map(poiDto,PuntoInteresEntity.class);
+           updated= puntosInteresDao.update(poiEntity);
+        }else{
+            throw new ServerException(HttpURLConnection.HTTP_BAD_REQUEST, erroresValidacion);
+        }
+        return updated;
     }
 
     public List<PuntoInteresDtoGetMaestro> getAllSinActivar() {

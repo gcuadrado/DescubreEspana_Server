@@ -68,6 +68,17 @@ public class RestPuntosInteres {
     @PUT
     @Privado
     @AdminOnly
+    @Path("/administrar")
+    public Response actualizarPunto(PuntoInteresDtoGetDetalle puntoInteresDtoGetDetalle) {
+        Response response;
+        serviciosPuntoInteres.updatePoi(puntoInteresDtoGetDetalle);
+        response = Response.ok(Constantes.OK).build();
+        return response;
+    }
+
+    @PUT
+    @Privado
+    @AdminOnly
     @Path("/administrar/{id}")
     public Response activarPunto(@PathParam("id") int id) {
         Response response;
