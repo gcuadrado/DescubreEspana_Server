@@ -42,7 +42,7 @@ public class ServiciosFotos {
         List<FotoPuntoInteresEntity> fotos = IntStream.range(0, imagenes.size()).mapToObj(i -> {
             //Obtenemos el path relativo de cada foto
             String path = "/uploads/" + folderUUID + "/" + UUID.randomUUID() + "." + Files.getFileExtension(imagenes.get(i).getContentDisposition().getFileName());
-           //Guardamos en el disco duro del servidor los archivos
+            //Guardamos en el disco duro del servidor los archivos
             try {
                 InputStream inputStream = ((BodyPartEntity) imagenes.get(i).getEntity()).getInputStream();
                 guardarImagenEnDisco(path, inputStream);
@@ -68,7 +68,7 @@ public class ServiciosFotos {
     }
 
     private void guardarImagenEnDisco(String path, InputStream inputStream) throws IOException {
-        path=FilenameUtils.separatorsToSystem(path);
+        path = FilenameUtils.separatorsToSystem(path);
         File file = new File(Constantes.PATH_DOCROOT + path);
         if (file.getParent() != null && !file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
@@ -84,8 +84,8 @@ public class ServiciosFotos {
 
     public void guardarImagenPrincipalEnDisco(String path, InputStream inputStream) throws IOException {
         BufferedImage inputImage = ImageIO.read(inputStream);
-        BufferedImage outPutImage=Scalr.resize(inputImage,150);
-        path=FilenameUtils.separatorsToSystem(path);
+        BufferedImage outPutImage = Scalr.resize(inputImage, 150);
+        path = FilenameUtils.separatorsToSystem(path);
         File file = new File(Constantes.PATH_DOCROOT + path);
 
         if (file.getParent() != null && !file.getParentFile().exists()) {
@@ -94,7 +94,7 @@ public class ServiciosFotos {
 
         //Se redimensiona la imagen a 150X150px, menos espacio, menos tiempo de carga
         Thumbnails.of(inputImage)
-                .size(150,150)
+                .size(150, 150)
                 .outputFormat(FilenameUtils.getExtension(path))
                 .toFile(file);
 
@@ -102,14 +102,27 @@ public class ServiciosFotos {
     }
 
     public boolean borrarDirectorioFotosPoi(int id) {
-        boolean borradas=false;
+        boolean borradas = false;
         try {
-            String uuidFolder=puntosInteresDao.get(id).getUuid_folder_filename();
+            String uuidFolder = puntosInteresDao.get(id).getUuid_folder_filename();
             FileUtils.deleteDirectory(new File(Constantes.PATH_POI_FOLDER + uuidFolder));
-            borradas=true;
-        }catch (Exception e){
-            throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR,"Error al eliminar las imágenes del disco duro");
+            borradas = true;
+        } catch (Exception e) {
+            throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR, "Error al eliminar las imágenes del disco duro");
         }
         return borradas;
+    }
+
+    public boolean delete(int id) {
+        boolean borrado=false;
+        FotoPuntoInteresEntity foto = fotosDao.get(id);
+        File file = new File(Constantes.PATH_DOCROOT + FilenameUtils.separatorsToSystem(foto.getPath()));
+        if (file.delete()) {
+            fotosDao.delete(id);
+            borrado=true;
+        } else {
+            throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR, "No se ha podido borrar la imagen del disco duro");
+        }
+        return borrado;
     }
 }
