@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class FotoPuntoInteresDtoGet {
     private int idFoto;
     private String path;
+    private int poiId;
 }

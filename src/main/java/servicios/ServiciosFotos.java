@@ -104,7 +104,7 @@ public class ServiciosFotos {
     public boolean borrarDirectorioFotosPoi(int id) {
         boolean borradas = false;
         try {
-            String uuidFolder = puntosInteresDao.get(id).getUuid_folder_filename();
+            String uuidFolder = puntosInteresDao.get(id).getUuidFolderFilename();
             FileUtils.deleteDirectory(new File(Constantes.PATH_POI_FOLDER + uuidFolder));
             borradas = true;
         } catch (Exception e) {

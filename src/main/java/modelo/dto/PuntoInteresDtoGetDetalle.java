@@ -14,7 +14,7 @@ import java.util.Collection;
 public class PuntoInteresDtoGetDetalle {
     private int idPuntoInteres;
     private String nombre;
-    private String path_imagen_principal;
+    private String pathImagenPrincipal;
     private String resumen;
     private String infoDetallada;
     private String fechaInicio;
@@ -29,6 +29,7 @@ public class PuntoInteresDtoGetDetalle {
     private String enlaceInfo;
     private String contacto;
     private Boolean activado;
+    private String uuidFolderFilename;
     private Collection<FotoPuntoInteresDtoGet> fotoPuntoInteresByIdPuntoInteres;
     private Collection<ValoracionDto> valoraciones;
     private UsuarioDtoGet usuarioByIdUsuario;

@@ -9,7 +9,7 @@ import java.util.Objects;
 public class PuntoInteresEntity {
     private int idPuntoInteres;
     private String nombre;
-    private String path_imagen_principal;
+    private String pathImagenPrincipal;
     private String resumen;
     private String infoDetallada;
     private String fechaInicio;
@@ -24,7 +24,7 @@ public class PuntoInteresEntity {
     private String enlaceInfo;
     private String contacto;
     private Boolean activado;
-    private String uuid_folder_filename;
+    private String uuidFolderFilename;
     private Collection<FotoPuntoInteresEntity> fotoPuntoInteresByIdPuntoInteres;
     private Collection<ValoracionEntity> valoraciones;
     private UsuarioEntity usuarioByIdUsuario;
@@ -52,12 +52,12 @@ public class PuntoInteresEntity {
 
     @Basic
     @Column(name = "path_imagen_principal")
-    public String getPath_imagen_principal() {
-        return path_imagen_principal;
+    public String getPathImagenPrincipal() {
+        return pathImagenPrincipal;
     }
 
-    public void setPath_imagen_principal(String path_imagen_principal) {
-        this.path_imagen_principal = path_imagen_principal;
+    public void setPathImagenPrincipal(String path_imagen_principal) {
+        this.pathImagenPrincipal = path_imagen_principal;
     }
 
     @Basic
@@ -202,12 +202,12 @@ public class PuntoInteresEntity {
 
     @Basic
     @Column(name = "uuid_folder_filename", updatable = false)
-    public String getUuid_folder_filename() {
-        return uuid_folder_filename;
+    public String getUuidFolderFilename() {
+        return uuidFolderFilename;
     }
 
-    public void setUuid_folder_filename(String uuid_folder_filename) {
-        this.uuid_folder_filename = uuid_folder_filename;
+    public void setUuidFolderFilename(String uuid_folder_filename) {
+        this.uuidFolderFilename = uuid_folder_filename;
     }
 
     @Override
@@ -217,7 +217,7 @@ public class PuntoInteresEntity {
         PuntoInteresEntity that = (PuntoInteresEntity) o;
         return idPuntoInteres == that.idPuntoInteres &&
                 Objects.equals(nombre, that.nombre) &&
-                Objects.equals(path_imagen_principal,that.path_imagen_principal) &&
+                Objects.equals(pathImagenPrincipal,that.pathImagenPrincipal) &&
                 Objects.equals(resumen, that.resumen) &&
                 Objects.equals(infoDetallada, that.infoDetallada) &&
                 Objects.equals(fechaInicio, that.fechaInicio) &&

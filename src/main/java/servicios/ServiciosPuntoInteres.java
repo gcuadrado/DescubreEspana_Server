@@ -58,10 +58,10 @@ public class ServiciosPuntoInteres {
             poiEntity.setActivado(false);
             //Creamos un UUID aleatorio para el nombre de la carpeta que albergará las fotos de este POI
             String uuidFolder= UUID.randomUUID().toString();
-            poiEntity.setUuid_folder_filename(uuidFolder);
+            poiEntity.setUuidFolderFilename(uuidFolder);
             //Creamos el path que tendrá la imagen principal en el disco duro y se lo añadimos al POI
             String path = "/uploads/" + uuidFolder + "/" + "principal." + Files.getFileExtension(imagenPrincipal.getContentDisposition().getFileName());
-            poiEntity.setPath_imagen_principal(path);
+            poiEntity.setPathImagenPrincipal(path);
             //Guardamos la imagen principal en disco
             try {
                 InputStream inputStream = ((BodyPartEntity) imagenPrincipal.getEntity()).getInputStream();
