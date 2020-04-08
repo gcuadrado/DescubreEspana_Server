@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="114.37636661807619" y="4032.0">dao.ValoracionDao</node>
+    <node x="1542.420669339163" y="4086.0">servicios.ServiciosKeyStore</node>
+    <node x="1031.0" y="3988.0">servicios.ServiciosUsuario</node>
+    <node x="3178.7540026724964" y="703.0">modelo.entity.ValoracionEntity</node>
+    <node x="2966.9875" y="5064.0">rest.RestFotos</node>
+    <node x="3871.695833333333" y="1859.0">dao.FotosDao</node>
+    <node x="1489.5873360058297" y="2898.0">modelo.dto.UsuarioDtoPost</node>
+    <node x="3636.434104713314" y="769.0">modelo.entity.FotoPuntoInteresEntity</node>
+    <node x="2088.920669339163" y="2898.0">modelo.UserKeystore</node>
+    <node x="528.3763666180762" y="5064.0">servlets.ActivacionServlet</node>
+    <node x="1319.3763666180762" y="5031.0">servlets.ReestablecimientoPassword</node>
+    <node x="2297.9875" y="5064.0">rest.JAXAdminFilter</node>
+    <node x="4424.883333333333" y="3845.0">modelo.dto.PuntoInteresDtoGetMaestro</node>
+    <node x="64.21185009718283" y="5042.0">servicios.ServiciosValoraciones</node>
+    <node x="3700.203352769679" y="5340.0">rest.RestPuntosInteres</node>
+    <node x="3570.5291666666667" y="4010.0">servicios.ServiciosFotos</node>
+    <node x="375.3763666180762" y="2799.0">modelo.dto.ValoracionDto</node>
+    <node x="3287.0853194849365" y="2865.0">modelo.dto.FotoPuntoInteresDtoGet</node>
+    <node x="1862.920669339163" y="5031.0">rest.RestUsuarios</node>
+    <node x="44.29518343051632" y="5417.0">rest.RestValoraciones</node>
+    <node x="2631.9875" y="5064.0">rest.JAXLoginFilter</node>
+    <node x="925.3763666180762" y="5031.0">servlets.ReenvioActivacion</node>
+    <node x="4119.883333333333" y="2931.0">dao.PuntosInteresDao</node>
+    <node x="2213.7375" y="1749.0">modelo.dto.UsuarioDtoGet</node>
+    <node x="1010.7000000000003" y="2931.0">dao.UserDao</node>
+    <node x="3019.320833333333" y="3350.0">modelo.dto.PuntoInteresDtoGetDetalle</node>
+    <node x="3328.0853194849365" y="1188.0">modelo.entity.PuntoInteresEntity</node>
+    <node x="1937.420669339163" y="3977.0">modelo.ApiError</node>
+    <node x="3832.4415026724964" y="4987.0">servicios.ServiciosPuntoInteres</node>
+    <node x="3206.695833333333" y="0.0">modelo.entity.UsuarioEntity</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="rest.RestFotos" target="modelo.dto.PuntoInteresDtoGetDetalle">
+      <point x="0.0" y="-69.5" />
+      <point x="3092.4875" y="4967.0" />
+      <point x="3096.4875" y="4967.0" />
+      <point x="-154.33333333333326" y="773.5" />
+    </edge>
+    <edge source="servlets.ReestablecimientoPassword" target="modelo.ApiError">
+      <point x="93.5" y="-102.5" />
+      <point x="1599.8763666180762" y="4967.0" />
+      <point x="1992.0206693391629" y="4967.0" />
+      <point x="-36.40000000000009" y="146.5" />
+    </edge>
+    <edge source="servicios.ServiciosPuntoInteres" target="modelo.dto.PuntoInteresDtoGetDetalle">
+      <point x="-303.625" y="-146.5" />
+      <point x="3875.8165026724964" y="4957.0" />
+      <point x="3405.1541666666667" y="4957.0" />
+      <point x="154.33333333333348" y="773.5" />
+    </edge>
+    <edge source="rest.RestPuntosInteres" target="modelo.dto.UsuarioDtoGet">
+      <point x="-131.20000000000005" y="-157.5" />
+      <point x="3733.0033527696787" y="5320.0" />
+      <point x="2956.4875" y="5320.0" />
+      <point x="2956.4875" y="2729.0" />
+      <point x="2377.6125" y="2729.0" />
+      <point x="60.375" y="179.5" />
+    </edge>
+    <edge source="rest.RestUsuarios" target="modelo.UserKeystore">
+      <point x="94.5" y="-102.5" />
+      <point x="2146.420669339163" y="4957.0" />
+      <point x="2212.920669339163" y="4957.0" />
+      <point x="0.0" y="146.5" />
+    </edge>
+    <edge source="servicios.ServiciosUsuario" target="modelo.dto.UsuarioDtoGet">
+      <point x="62.59999999999991" y="-135.5" />
+      <point x="1250.1" y="3320.0" />
+      <point x="1323.2000000000003" y="3320.0" />
+      <point x="1323.2000000000003" y="2749.0" />
+      <point x="2291.3625" y="2749.0" />
+      <point x="-25.875" y="179.5" />
+    </edge>
+    <edge source="dao.FotosDao" target="modelo.entity.FotoPuntoInteresEntity">
+      <point x="0.0" y="-69.5" />
+      <point x="4035.195833333333" y="1168.0" />
+      <point x="3959.5769618561712" y="1168.0" />
+      <point x="149.1428571428571" y="146.5" />
+    </edge>
+    <edge source="rest.RestFotos" target="modelo.dto.FotoPuntoInteresDtoGet">
+      <point x="-83.66666666666674" y="-69.5" />
+      <point x="3008.820833333333" y="3330.0" />
+      <point x="3319.3353194849365" y="3330.0" />
+      <point x="-96.75" y="179.5" />
+    </edge>
+    <edge source="modelo.entity.FotoPuntoInteresEntity" target="modelo.entity.PuntoInteresEntity">
+      <point x="0.0" y="146.5" />
+      <point x="3810.434104713314" y="1168.0" />
+      <point x="3770.7853194849367" y="1168.0" />
+      <point x="209.70000000000005" y="-740.5" />
+    </edge>
+    <edge source="rest.RestValoraciones" target="modelo.dto.UsuarioDtoGet">
+      <point x="-92.66666666666697" y="-80.5" />
+      <point x="90.62851676384935" y="5320.0" />
+      <point x="0.0" y="5320.0" />
+      <point x="0.0" y="2709.0" />
+      <point x="2222.3625" y="2709.0" />
+      <point x="-94.875" y="179.5" />
+    </edge>
+    <edge source="rest.RestPuntosInteres" target="modelo.dto.PuntoInteresDtoGetMaestro">
+      <point x="131.20000000000005" y="-157.5" />
+      <point x="3995.4033527696793" y="5320.0" />
+      <point x="4632.633333333333" y="5320.0" />
+      <point x="69.25" y="278.5" />
+    </edge>
+    <edge source="rest.RestValoraciones" target="servicios.ServiciosValoraciones">
+      <point x="0.0" y="-80.5" />
+      <point x="183.29518343051632" y="5320.0" />
+      <point x="220.21185009718283" y="5320.0" />
+      <point x="0.0" y="91.5" />
+    </edge>
+    <edge source="rest.JAXAdminFilter" target="modelo.dto.UsuarioDtoGet">
+      <point x="78.5" y="-69.5" />
+      <point x="2533.4875" y="2749.0" />
+      <point x="2343.1125" y="2749.0" />
+      <point x="25.875" y="179.5" />
+    </edge>
+    <edge source="servicios.ServiciosUsuario" target="modelo.dto.UsuarioDtoPost">
+      <point x="125.19999999999982" y="-135.5" />
+      <point x="1312.6999999999998" y="3330.0" />
+      <point x="1524.9206693391632" y="3330.0" />
+      <point x="-70.66666666666652" y="146.5" />
+    </edge>
+    <edge source="servlets.ReenvioActivacion" target="modelo.ApiError">
+      <point x="93.5" y="-102.5" />
+      <point x="1205.8763666180762" y="4957.0" />
+      <point x="1955.6206693391628" y="4957.0" />
+      <point x="-72.80000000000018" y="146.5" />
+    </edge>
+    <edge source="rest.RestUsuarios" target="servicios.ServiciosUsuario">
+      <point x="-157.5" y="-102.5" />
+      <point x="1894.420669339163" y="4937.0" />
+      <point x="1304.875" y="4937.0" />
+      <point x="117.375" y="135.5" />
+    </edge>
+    <edge source="servicios.ServiciosFotos" target="modelo.dto.FotoPuntoInteresDtoGet">
+      <point x="-198.0" y="-113.5" />
+      <point x="3603.5291666666667" y="3330.0" />
+      <point x="3512.8353194849365" y="3330.0" />
+      <point x="96.75" y="179.5" />
+    </edge>
+    <edge source="rest.RestUsuarios" target="modelo.ApiError">
+      <point x="31.5" y="-102.5" />
+      <point x="2083.420669339163" y="4967.0" />
+      <point x="2028.420669339163" y="4967.0" />
+      <point x="0.0" y="146.5" />
+    </edge>
+    <edge source="dao.ValoracionDao" target="modelo.entity.ValoracionEntity">
+      <point x="-60.0" y="-91.5" />
+      <point x="174.3763666180762" y="3330.0" />
+      <point x="81.87636661807619" y="3330.0" />
+      <point x="81.87636661807619" y="1168.0" />
+      <point x="3303.0397169582106" y="1168.0" />
+      <point x="-49.71428571428578" y="212.5" />
+    </edge>
+    <edge source="servicios.ServiciosValoraciones" target="modelo.entity.PuntoInteresEntity">
+      <point x="97.5" y="-91.5" />
+      <point x="317.71185009718283" y="4957.0" />
+      <point x="364.8763666180762" y="4957.0" />
+      <point x="364.8763666180762" y="2779.0" />
+      <point x="3444.5853194849365" y="2779.0" />
+      <point x="-116.5" y="740.5" />
+    </edge>
+    <edge source="servicios.ServiciosPuntoInteres" target="servicios.ServiciosFotos">
+      <point x="-130.125" y="-146.5" />
+      <point x="4049.3165026724964" y="4937.0" />
+      <point x="3955.5291666666667" y="4937.0" />
+      <point x="154.0" y="113.5" />
+    </edge>
+    <edge source="servicios.ServiciosKeyStore" target="modelo.dto.UsuarioDtoPost">
+      <point x="0.0" y="-37.5" />
+      <point x="1729.920669339163" y="3330.0" />
+      <point x="1666.2540026724962" y="3330.0" />
+      <point x="70.66666666666652" y="146.5" />
+    </edge>
+    <edge source="modelo.entity.PuntoInteresEntity" target="modelo.entity.ValoracionEntity">
+      <point x="-163.10000000000014" y="-740.5" />
+      <point x="3397.9853194849366" y="1168.0" />
+      <point x="3402.4682883867818" y="1168.0" />
+      <point x="49.71428571428555" y="212.5" />
+    </edge>
+    <edge source="rest.RestPuntosInteres" target="modelo.dto.PuntoInteresDtoGetDetalle">
+      <point x="-65.59999999999991" y="-157.5" />
+      <point x="3798.603352769679" y="5310.0" />
+      <point x="3250.820833333333" y="5310.0" />
+      <point x="0.0" y="773.5" />
+    </edge>
+    <edge source="modelo.dto.ValoracionDto" target="modelo.dto.UsuarioDtoGet">
+      <point x="0.0" y="-245.5" />
+      <point x="512.3763666180762" y="2729.0" />
+      <point x="2256.8625" y="2729.0" />
+      <point x="-60.375" y="179.5" />
+    </edge>
+    <edge source="modelo.entity.ValoracionEntity" target="modelo.entity.UsuarioEntity">
+      <point x="87.0" y="-212.5" />
+      <point x="3439.7540026724964" y="683.0" />
+      <point x="3357.0291666666662" y="683.0" />
+      <point x="27.333333333333258" y="311.5" />
+    </edge>
+    <edge source="servicios.ServiciosUsuario" target="modelo.entity.UsuarioEntity">
+      <point x="-62.59999999999991" y="-135.5" />
+      <point x="1124.9" y="3320.0" />
+      <point x="1000.2000000000003" y="3320.0" />
+      <point x="1000.2000000000003" y="663.0" />
+      <point x="3275.0291666666662" y="663.0" />
+      <point x="-54.66666666666674" y="311.5" />
+    </edge>
+    <edge source="servicios.ServiciosPuntoInteres" target="modelo.entity.PuntoInteresEntity">
+      <point x="130.125" y="-146.5" />
+      <point x="4309.566502672496" y="4957.0" />
+      <point x="4403.383333333333" y="4957.0" />
+      <point x="4403.383333333333" y="2689.0" />
+      <point x="3755.251986151603" y="2689.0" />
+      <point x="194.16666666666674" y="740.5" />
+    </edge>
+    <edge source="dao.UserDao" target="modelo.dto.UsuarioDtoGet">
+      <point x="75.5" y="-113.5" />
+      <point x="1237.2000000000003" y="2739.0" />
+      <point x="2274.1125" y="2739.0" />
+      <point x="-43.125" y="179.5" />
+    </edge>
+    <edge source="servicios.ServiciosPuntoInteres" target="dao.PuntosInteresDao">
+      <point x="43.375" y="-146.5" />
+      <point x="4222.816502672496" y="4947.0" />
+      <point x="4324.633333333333" y="4947.0" />
+      <point x="68.25" y="113.5" />
+    </edge>
+    <edge source="rest.RestUsuarios" target="servicios.ServiciosKeyStore">
+      <point x="-31.5" y="-102.5" />
+      <point x="2020.420669339163" y="4917.0" />
+      <point x="1729.920669339163" y="4917.0" />
+      <point x="0.0" y="37.5" />
+    </edge>
+    <edge source="servicios.ServiciosFotos" target="dao.FotosDao">
+      <point x="132.0" y="-113.5" />
+      <point x="3933.5291666666667" y="3320.0" />
+      <point x="4035.195833333333" y="3320.0" />
+      <point x="0.0" y="69.5" />
+    </edge>
+    <edge source="servicios.ServiciosValoraciones" target="dao.ValoracionDao">
+      <point x="58.5" y="-91.5" />
+      <point x="278.71185009718283" y="4917.0" />
+      <point x="234.3763666180762" y="4917.0" />
+      <point x="0.0" y="91.5" />
+    </edge>
+    <edge source="servicios.ServiciosUsuario" target="dao.UserDao">
+      <point x="0.0" y="-135.5" />
+      <point x="1187.5" y="3330.0" />
+      <point x="1161.7000000000003" y="3330.0" />
+      <point x="0.0" y="113.5" />
+    </edge>
+    <edge source="servicios.ServiciosPuntoInteres" target="modelo.entity.UsuarioEntity">
+      <point x="216.875" y="-146.5" />
+      <point x="4396.316502672496" y="4967.0" />
+      <point x="4414.383333333333" y="4967.0" />
+      <point x="4414.383333333333" y="653.0" />
+      <point x="3439.0291666666662" y="653.0" />
+      <point x="109.33333333333326" y="311.5" />
+    </edge>
+    <edge source="rest.RestUsuarios" target="modelo.dto.UsuarioDtoGet">
+      <point x="157.5" y="-102.5" />
+      <point x="2209.420669339163" y="4967.0" />
+      <point x="2347.420669339163" y="4967.0" />
+      <point x="2347.420669339163" y="2759.0" />
+      <point x="2325.8625" y="2759.0" />
+      <point x="8.625" y="179.5" />
+    </edge>
+    <edge source="dao.PuntosInteresDao" target="modelo.entity.PuntoInteresEntity">
+      <point x="0.0" y="-113.5" />
+      <point x="4256.383333333333" y="2699.0" />
+      <point x="3677.5853194849365" y="2699.0" />
+      <point x="116.5" y="740.5" />
+    </edge>
+    <edge source="rest.RestPuntosInteres" target="servicios.ServiciosFotos">
+      <point x="0.0" y="-157.5" />
+      <point x="3864.203352769679" y="5300.0" />
+      <point x="3794.0040026724964" y="5300.0" />
+      <point x="3794.0040026724964" y="4967.0" />
+      <point x="3801.5291666666667" y="4967.0" />
+      <point x="0.0" y="113.5" />
+    </edge>
+    <edge source="servicios.ServiciosValoraciones" target="modelo.dto.UsuarioDtoGet">
+      <point x="-19.5" y="-91.5" />
+      <point x="200.71185009718283" y="4937.0" />
+      <point x="92.87636661807619" y="4937.0" />
+      <point x="92.87636661807619" y="2719.0" />
+      <point x="2239.6125" y="2719.0" />
+      <point x="-77.625" y="179.5" />
+    </edge>
+    <edge source="servicios.ServiciosFotos" target="modelo.entity.FotoPuntoInteresEntity">
+      <point x="0.0" y="-113.5" />
+      <point x="3801.5291666666667" y="3330.0" />
+      <point x="3850.195833333333" y="3330.0" />
+      <point x="3850.195833333333" y="1158.0" />
+      <point x="3860.1483904275997" y="1158.0" />
+      <point x="49.71428571428555" y="146.5" />
+    </edge>
+    <edge source="servicios.ServiciosValoraciones" target="modelo.entity.ValoracionEntity">
+      <point x="-58.5" y="-91.5" />
+      <point x="161.71185009718283" y="4947.0" />
+      <point x="70.87636661807619" y="4947.0" />
+      <point x="70.87636661807619" y="1158.0" />
+      <point x="3253.325431243925" y="1158.0" />
+      <point x="-99.42857142857156" y="212.5" />
+    </edge>
+    <edge source="modelo.dto.PuntoInteresDtoGetDetalle" target="modelo.dto.ValoracionDto">
+      <point x="-154.33333333333348" y="-773.5" />
+      <point x="3096.4874999999997" y="3310.0" />
+      <point x="615.1263666180762" y="3310.0" />
+      <point x="102.75" y="245.5" />
+    </edge>
+    <edge source="modelo.entity.PuntoInteresEntity" target="modelo.entity.FotoPuntoInteresEntity">
+      <point x="116.5" y="-740.5" />
+      <point x="3677.5853194849365" y="1168.0" />
+      <point x="3711.005533284743" y="1168.0" />
+      <point x="-99.42857142857144" y="146.5" />
+    </edge>
+    <edge source="servicios.ServiciosPuntoInteres" target="modelo.dto.PuntoInteresDtoGetMaestro">
+      <point x="303.625" y="-146.5" />
+      <point x="4483.066502672496" y="4967.0" />
+      <point x="4494.133333333333" y="4967.0" />
+      <point x="-69.25" y="278.5" />
+    </edge>
+    <edge source="rest.JAXAdminFilter" target="modelo.ApiError">
+      <point x="-78.5" y="-69.5" />
+      <point x="2376.4875" y="4947.0" />
+      <point x="2064.820669339163" y="4947.0" />
+      <point x="36.40000000000009" y="146.5" />
+    </edge>
+    <edge source="dao.ValoracionDao" target="modelo.dto.ValoracionDto">
+      <point x="60.0" y="-91.5" />
+      <point x="294.3763666180762" y="3330.0" />
+      <point x="409.6263666180762" y="3330.0" />
+      <point x="-102.75" y="245.5" />
+    </edge>
+    <edge source="servlets.ReenvioActivacion" target="servicios.ServiciosUsuario">
+      <point x="-93.5" y="-102.5" />
+      <point x="1018.8763666180762" y="4967.0" />
+      <point x="1148.375" y="4967.0" />
+      <point x="-39.125" y="135.5" />
+    </edge>
+    <edge source="rest.RestValoraciones" target="modelo.dto.ValoracionDto">
+      <point x="92.66666666666697" y="-80.5" />
+      <point x="275.9618500971833" y="5320.0" />
+      <point x="517.8763666180762" y="5320.0" />
+      <point x="517.8763666180762" y="3330.0" />
+      <point x="546.6263666180762" y="3330.0" />
+      <point x="34.25" y="245.5" />
+    </edge>
+    <edge source="rest.JAXLoginFilter" target="modelo.dto.UsuarioDtoGet">
+      <point x="78.5" y="-69.5" />
+      <point x="2867.4875" y="2739.0" />
+      <point x="2360.3625" y="2739.0" />
+      <point x="43.125" y="179.5" />
+    </edge>
+    <edge source="servicios.ServiciosValoraciones" target="modelo.dto.ValoracionDto">
+      <point x="136.5" y="-91.5" />
+      <point x="356.71185009718283" y="4967.0" />
+      <point x="506.8763666180762" y="4967.0" />
+      <point x="506.8763666180762" y="3330.0" />
+      <point x="478.1263666180762" y="3330.0" />
+      <point x="-34.25" y="245.5" />
+    </edge>
+    <edge source="servlets.ReestablecimientoPassword" target="servicios.ServiciosUsuario">
+      <point x="-93.5" y="-102.5" />
+      <point x="1412.8763666180762" y="4947.0" />
+      <point x="1226.625" y="4947.0" />
+      <point x="39.125" y="135.5" />
+    </edge>
+    <edge source="rest.RestFotos" target="servicios.ServiciosFotos">
+      <point x="83.66666666666674" y="-69.5" />
+      <point x="3176.154166666667" y="4967.0" />
+      <point x="3647.5291666666667" y="4967.0" />
+      <point x="-154.0" y="113.5" />
+    </edge>
+    <edge source="servicios.ServiciosValoraciones" target="modelo.entity.UsuarioEntity">
+      <point x="-136.5" y="-91.5" />
+      <point x="83.71185009718283" y="4967.0" />
+      <point x="48.87636661807619" y="4967.0" />
+      <point x="48.87636661807619" y="643.0" />
+      <point x="3220.3625" y="643.0" />
+      <point x="-109.33333333333326" y="311.5" />
+    </edge>
+    <edge source="servicios.ServiciosFotos" target="dao.PuntosInteresDao">
+      <point x="198.0" y="-113.5" />
+      <point x="3999.5291666666667" y="3330.0" />
+      <point x="4188.133333333333" y="3330.0" />
+      <point x="-68.25" y="113.5" />
+    </edge>
+    <edge source="modelo.entity.PuntoInteresEntity" target="modelo.entity.UsuarioEntity">
+      <point x="23.299999999999955" y="-740.5" />
+      <point x="3584.385319484936" y="1168.0" />
+      <point x="3567.5353194849363" y="1168.0" />
+      <point x="3567.5353194849363" y="663.0" />
+      <point x="3411.695833333333" y="663.0" />
+      <point x="82.0" y="311.5" />
+    </edge>
+    <edge source="modelo.UserKeystore" target="modelo.dto.UsuarioDtoGet">
+      <point x="0.0" y="-146.5" />
+      <point x="2212.920669339163" y="2759.0" />
+      <point x="2308.6125" y="2759.0" />
+      <point x="-8.625" y="179.5" />
+    </edge>
+    <edge source="rest.RestPuntosInteres" target="servicios.ServiciosPuntoInteres">
+      <point x="65.59999999999991" y="-157.5" />
+      <point x="3929.803352769679" y="5310.0" />
+      <point x="4179.441502672496" y="5310.0" />
+      <point x="0.0" y="146.5" />
+    </edge>
+    <edge source="servlets.ActivacionServlet" target="servicios.ServiciosUsuario">
+      <point x="0.0" y="-69.5" />
+      <point x="716.8763666180762" y="4957.0" />
+      <point x="1070.125" y="4957.0" />
+      <point x="-117.375" y="135.5" />
+    </edge>
+    <edge source="dao.UserDao" target="modelo.entity.UsuarioEntity">
+      <point x="-75.5" y="-113.5" />
+      <point x="1086.2000000000003" y="673.0" />
+      <point x="3302.3625" y="673.0" />
+      <point x="-27.333333333333258" y="311.5" />
+    </edge>
+    <edge source="rest.RestUsuarios" target="modelo.dto.UsuarioDtoPost">
+      <point x="-94.5" y="-102.5" />
+      <point x="1957.420669339163" y="4927.0" />
+      <point x="1531.920669339163" y="4927.0" />
+      <point x="1531.920669339163" y="3330.0" />
+      <point x="1595.5873360058297" y="3330.0" />
+      <point x="0.0" y="146.5" />
+    </edge>
+    <edge source="servicios.ServiciosPuntoInteres" target="modelo.dto.UsuarioDtoGet">
+      <point x="-43.375" y="-146.5" />
+      <point x="4136.066502672496" y="4967.0" />
+      <point x="4109.383333333333" y="4967.0" />
+      <point x="4109.383333333333" y="2709.0" />
+      <point x="2412.1125" y="2709.0" />
+      <point x="94.875" y="179.5" />
+    </edge>
+    <edge source="servicios.ServiciosPuntoInteres" target="modelo.dto.FotoPuntoInteresDtoGet">
+      <point x="-216.875" y="-146.5" />
+      <point x="3962.5665026724964" y="4947.0" />
+      <point x="3492.820833333333" y="4947.0" />
+      <point x="3492.820833333333" y="3330.0" />
+      <point x="3448.3353194849365" y="3330.0" />
+      <point x="32.25" y="179.5" />
+    </edge>
+    <edge source="modelo.dto.PuntoInteresDtoGetDetalle" target="modelo.dto.FotoPuntoInteresDtoGet">
+      <point x="154.33333333333326" y="-773.5" />
+      <point x="3405.1541666666662" y="3330.0" />
+      <point x="3383.8353194849365" y="3330.0" />
+      <point x="-32.25" y="179.5" />
+    </edge>
+    <edge source="modelo.dto.PuntoInteresDtoGetDetalle" target="modelo.dto.UsuarioDtoGet">
+      <point x="0.0" y="-773.5" />
+      <point x="3250.820833333333" y="3320.0" />
+      <point x="3241.4603194849365" y="3320.0" />
+      <point x="3241.4603194849365" y="2719.0" />
+      <point x="2394.8625" y="2719.0" />
+      <point x="77.625" y="179.5" />
+    </edge>
+    <edge source="servicios.ServiciosFotos" target="modelo.entity.PuntoInteresEntity">
+      <point x="-66.0" y="-113.5" />
+      <point x="3735.5291666666667" y="3310.0" />
+      <point x="3566.5853194849365" y="3310.0" />
+      <point x="3566.5853194849365" y="2779.0" />
+      <point x="3599.91865281827" y="2779.0" />
+      <point x="38.83333333333326" y="740.5" />
+    </edge>
+    <edge source="modelo.entity.ValoracionEntity" target="modelo.entity.PuntoInteresEntity">
+      <point x="99.42857142857133" y="212.5" />
+      <point x="3452.182574101068" y="1168.0" />
+      <point x="3444.5853194849365" y="1168.0" />
+      <point x="-116.5" y="-740.5" />
+    </edge>
+    <edge source="rest.JAXLoginFilter" target="modelo.ApiError">
+      <point x="-78.5" y="-69.5" />
+      <point x="2710.4875" y="4937.0" />
+      <point x="2101.220669339163" y="4937.0" />
+      <point x="72.80000000000018" y="146.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.6802163833075734" x="703.2992501704158" y="3968.924562599409" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

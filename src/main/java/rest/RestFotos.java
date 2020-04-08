@@ -51,4 +51,5 @@ public class RestFotos {
         //Devolvemos el punto ya insertado
         return Response.status(Response.Status.CREATED).entity(fotos).build();
     }
+
 }
