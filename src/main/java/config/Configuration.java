@@ -36,6 +36,7 @@ public class Configuration {
     private String emailPass;
     private String smtpHost;
     private int smtpPort;
+    private String uploadsDirectory;
 
     public String getUrlDB() {
         return urlDB;
@@ -79,6 +80,14 @@ public class Configuration {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getUploadsDirectory() {
+        return uploadsDirectory;
+    }
+
+    public void setUploadsDirectory(String uploadsDirectory) {
+        this.uploadsDirectory = uploadsDirectory;
     }
 
     public void setEmail(String email) {

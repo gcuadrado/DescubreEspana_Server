@@ -1,6 +1,7 @@
 package servicios;
 
 import com.google.common.io.Files;
+import config.Configuration;
 import dao.FotosDao;
 import dao.PuntosInteresDao;
 import modelo.ServerException;
@@ -69,7 +70,7 @@ public class ServiciosFotos {
 
     private void guardarImagenEnDisco(String path, InputStream inputStream) throws IOException {
         path = FilenameUtils.separatorsToSystem(path);
-        File file = new File(Constantes.PATH_DOCROOT + path);
+        File file = new File(Configuration.getInstance().getUploadsDirectory() + path);
         if (file.getParent() != null && !file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
@@ -86,7 +87,7 @@ public class ServiciosFotos {
         BufferedImage inputImage = ImageIO.read(inputStream);
         BufferedImage outPutImage = Scalr.resize(inputImage, 150);
         path = FilenameUtils.separatorsToSystem(path);
-        File file = new File(Constantes.PATH_DOCROOT + path);
+        File file = new File(Configuration.getInstance().getUploadsDirectory() + path);
 
         if (file.getParent() != null && !file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
@@ -116,7 +117,7 @@ public class ServiciosFotos {
     public boolean delete(int id) {
         boolean borrado=false;
         FotoPuntoInteresEntity foto = fotosDao.get(id);
-        File file = new File(Constantes.PATH_DOCROOT + FilenameUtils.separatorsToSystem(foto.getPath()));
+        File file = new File(Configuration.getInstance().getUploadsDirectory() + FilenameUtils.separatorsToSystem(foto.getPath()));
         if (file.delete()) {
             fotosDao.delete(id);
             borrado=true;

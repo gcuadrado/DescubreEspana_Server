@@ -1,5 +1,7 @@
 package utils;
 
+import config.Configuration;
+
 import java.io.File;
 
 public class Constantes {
@@ -13,5 +15,5 @@ public class Constantes {
     public static final int ADMIN_USER=2;
     public static final int STANDARD_USER=1;
     public static final String PATH_DOCROOT = System.getProperty("catalina.base") + File.separator + "docroot";
-    public static final String PATH_POI_FOLDER=PATH_DOCROOT+ File.separator + "uploads" + File.separator;
+    public static final String PATH_POI_FOLDER= Configuration.getInstance().getUploadsDirectory() + File.separator + "uploads" + File.separator;
 }
