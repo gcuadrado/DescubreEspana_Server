@@ -42,7 +42,7 @@ public class ServiciosFotos {
 
         List<FotoPuntoInteresEntity> fotos = IntStream.range(0, imagenes.size()).mapToObj(i -> {
             //Obtenemos el path relativo de cada foto
-            String path = "/uploads/" + folderUUID + "/" + UUID.randomUUID() + "." + Files.getFileExtension(imagenes.get(i).getContentDisposition().getFileName());
+            String path = "uploads/" + folderUUID + "/" + UUID.randomUUID() + "." + Files.getFileExtension(imagenes.get(i).getContentDisposition().getFileName());
             //Guardamos en el disco duro del servidor los archivos
             try {
                 InputStream inputStream = ((BodyPartEntity) imagenes.get(i).getEntity()).getInputStream();
