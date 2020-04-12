@@ -6,7 +6,6 @@ import modelo.dto.UsuarioDtoGet;
 import org.glassfish.jersey.media.multipart.BodyPartEntity;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
-import servicios.ServiciosFotos;
 import servicios.ServiciosPuntoInteres;
 import utils.Constantes;
 
@@ -27,8 +26,6 @@ import java.util.List;
 public class RestPuntosInteres {
     @Inject
     private ServiciosPuntoInteres serviciosPuntoInteres;
-    @Inject
-    private ServiciosFotos serviciosFotos;
     @Context
     private ServletContext servletContext;
     @Inject
