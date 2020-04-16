@@ -69,11 +69,16 @@ public class ServiciosFotos {
     }
 
     private void guardarImagenEnDisco(String path, InputStream inputStream) throws IOException {
+        //Convertimos el path relativo de la imagen a la notación del S.O donde esté corriendo el servidor
         path = FilenameUtils.separatorsToSystem(path);
+        //Creamos el archivo, uniendo el directorio preconfigurado donde se deben almacenar
+        //las imágenes con el path relativo de la misma
         File file = new File(Configuration.getInstance().getUploadsDirectory() + path);
+        //Si las carpetas padre del archivo aún no existen, se crean
         if (file.getParent() != null && !file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
+        //Escribimos el archivo
         FileOutputStream fos = new FileOutputStream(file);
         byte[] bytes = new byte[1024];
         int read;

@@ -38,10 +38,16 @@ public class PuntosInteresDao {
             Query query = session.createQuery("from PuntoInteresEntity where idPuntoInteres=:id");
             query.setParameter("id", id);
             puntoInteresEntity = (PuntoInteresEntity) query.uniqueResult();
-
+            if (puntoInteresEntity == null) {
+                throw new ServerException(HttpURLConnection.HTTP_BAD_REQUEST, "No se encuentra este id en Base de datos");
+            }
         } catch (Exception e) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
-            throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR, "Ha habido un error al acceder a la base de datos");
+            if (e instanceof ServerException) {
+                throw e;
+            } else {
+                throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR, "Ha habido un error al acceder a la base de datos");
+            }
         } finally {
             session.close();
         }
@@ -68,13 +74,13 @@ public class PuntosInteresDao {
     }
 
     public boolean update(PuntoInteresEntity poiEntity) {
-        boolean updated=false;
+        boolean updated = false;
         try {
             session = HibernateUtil.getSession();
             session.beginTransaction();
             session.update(poiEntity);
             session.getTransaction().commit();
-            updated=true;
+            updated = true;
         } catch (Exception e) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
             if (session.getTransaction() != null) {
@@ -108,7 +114,7 @@ public class PuntosInteresDao {
             session = HibernateUtil.getSession();
             session.beginTransaction();
             Query query = session.createQuery("update PuntoInteresEntity p set p.activado=true where p.id=:id");
-            query.setParameter("id",id);
+            query.setParameter("id", id);
             if (query.executeUpdate() > 0) {
                 activado = true;
             } else {
@@ -139,15 +145,15 @@ public class PuntosInteresDao {
             session.beginTransaction();
 
             Query borrarValoraciones = session.createQuery("delete from ValoracionEntity v where v.puntoInteresByIdPuntoInteres.id=:id");
-            borrarValoraciones.setParameter("id",id);
+            borrarValoraciones.setParameter("id", id);
             borrarValoraciones.executeUpdate();
 
             Query borrarFotos = session.createQuery("delete from FotoPuntoInteresEntity f where f.puntoInteresByIdPuntoInteres.id=:id");
-            borrarFotos.setParameter("id",id);
+            borrarFotos.setParameter("id", id);
             borrarFotos.executeUpdate();
 
             Query borrarPunto = session.createQuery("delete from PuntoInteresEntity p where p.id=:id");
-            borrarPunto.setParameter("id",id);
+            borrarPunto.setParameter("id", id);
             if (borrarPunto.executeUpdate() > 0) {
                 borrado = true;
             } else {
