@@ -210,6 +210,7 @@ public class PuntoInteresEntity {
         this.uuidFolderFilename = uuid_folder_filename;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

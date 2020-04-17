@@ -19,8 +19,12 @@ public class PuntosInteresDao {
         List<PuntoInteresEntity> puntoInteresEntities = new ArrayList<>();
         try {
             session = HibernateUtil.getSession();
+            //Cómo devolver los puntos ordenados por distancia al usuario
+           /* Query query=session.createNativeQuery(" select * from punto_interes order by st_distance(POINT(latitud,longitud),POINT(40.328861116667696,-3.5165387596094604))",PuntoInteresEntity.class);
+            puntoInteresEntities=(List<PuntoInteresEntity>)query.getResultList();*/
             Query query = session.createQuery("from PuntoInteresEntity p where p.activado=true");
             puntoInteresEntities = query.list();
+
         } catch (Exception e) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
             throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR, "Ha habido un error al acceder a la base de datos");
