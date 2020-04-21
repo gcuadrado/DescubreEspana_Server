@@ -13,6 +13,7 @@ public class PuntoInteresDtoGetMaestro {
     private int idPuntoInteres;
     private String nombre;
     private String pathImagenPrincipal;
+    private String categoria;
     private Double latitud;
     private Double longitud;
     private Boolean activado;

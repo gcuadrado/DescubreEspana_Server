@@ -43,6 +43,15 @@ public class RestPuntosInteres {
     }
 
     @GET
+    @Path("/cercanos")
+    public Response getPuntosCercanos(@QueryParam("latitud") double latitud,@QueryParam("longitud") double longitud) {
+        Response response;
+        List<PuntoInteresDtoGetMaestro> usuarios = serviciosPuntoInteres.getAllCercanos(latitud,longitud);
+        response = Response.ok(usuarios).build();
+        return response;
+    }
+
+    @GET
     @Privado
     @AdminOnly
     @Path("/administrar")

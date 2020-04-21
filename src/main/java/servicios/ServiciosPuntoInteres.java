@@ -111,4 +111,10 @@ public class ServiciosPuntoInteres {
         }
         return true;
     }
+
+    public List<PuntoInteresDtoGetMaestro> getAllCercanos(double latitud, double longitud) {
+        return puntosInteresDao.getAllCercanos(latitud,longitud).stream().map(poi -> modelMapper.map(poi, PuntoInteresDtoGetMaestro.class)).collect(Collectors.toList());
+    }
+
+
 }

@@ -34,6 +34,25 @@ public class PuntosInteresDao {
         return puntoInteresEntities;
     }
 
+    public List<PuntoInteresEntity> getAllCercanos(double latitud, double longitud) {
+        List<PuntoInteresEntity> puntoInteresEntities = new ArrayList<>();
+        try {
+            session = HibernateUtil.getSession();
+            //Cómo devolver los puntos ordenados por distancia al usuario
+            Query query = session.createNativeQuery(" select * from punto_interes order by st_distance(POINT(latitud,longitud),POINT(?,?))", PuntoInteresEntity.class);
+            query.setParameter(1,latitud);
+            query.setParameter(2,longitud);
+            puntoInteresEntities = (List<PuntoInteresEntity>) query.getResultList();
+
+        } catch (Exception e) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
+            throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR, "Ha habido un error al acceder a la base de datos");
+        } finally {
+            session.close();
+        }
+        return puntoInteresEntities;
+    }
+
 
     public PuntoInteresEntity get(int id) throws ServerException {
         PuntoInteresEntity puntoInteresEntity = null;
@@ -180,4 +199,6 @@ public class PuntosInteresDao {
         }
         return borrado;
     }
+
+
 }
