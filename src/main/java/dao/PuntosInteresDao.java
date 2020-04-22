@@ -39,7 +39,7 @@ public class PuntosInteresDao {
         try {
             session = HibernateUtil.getSession();
             //Cómo devolver los puntos ordenados por distancia al usuario
-            Query query = session.createNativeQuery(" select * from punto_interes order by st_distance(POINT(latitud,longitud),POINT(?,?))", PuntoInteresEntity.class);
+            Query query = session.createNativeQuery(" select * from punto_interes where activado=1 order by st_distance(POINT(latitud,longitud),POINT(?,?)) limit 10", PuntoInteresEntity.class);
             query.setParameter(1,latitud);
             query.setParameter(2,longitud);
             puntoInteresEntities = (List<PuntoInteresEntity>) query.getResultList();
