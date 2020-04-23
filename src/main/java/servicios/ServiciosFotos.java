@@ -15,7 +15,6 @@ import org.glassfish.jersey.media.multipart.BodyPartEntity;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.imgscalr.Scalr;
 import org.modelmapper.ModelMapper;
-import utils.Constantes;
 
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
@@ -73,7 +72,7 @@ public class ServiciosFotos {
         path = FilenameUtils.separatorsToSystem(path);
         //Creamos el archivo, uniendo el directorio preconfigurado donde se deben almacenar
         //las imágenes con el path relativo de la misma
-        File file = new File(Configuration.getInstance().getUploadsDirectory() + path);
+        File file = new File(System.getProperty("catalina.base")+ File.separator + path);
         //Si las carpetas padre del archivo aún no existen, se crean
         if (file.getParent() != null && !file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
@@ -92,7 +91,7 @@ public class ServiciosFotos {
         BufferedImage inputImage = ImageIO.read(inputStream);
         BufferedImage outPutImage = Scalr.resize(inputImage, 150);
         path = FilenameUtils.separatorsToSystem(path);
-        File file = new File(Configuration.getInstance().getUploadsDirectory() + path);
+        File file = new File(System.getProperty("catalina.base")+File.separator + path);
 
         if (file.getParent() != null && !file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
@@ -111,7 +110,7 @@ public class ServiciosFotos {
         boolean borradas = false;
         try {
             String uuidFolder = puntosInteresDao.get(id).getUuidFolderFilename();
-            FileUtils.deleteDirectory(new File(Constantes.PATH_POI_FOLDER + uuidFolder));
+            FileUtils.deleteDirectory(new File(System.getProperty("catalina.base")+File.separator+"uploads"+File.separator + uuidFolder));
             borradas = true;
         } catch (Exception e) {
             throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR, "Error al eliminar las imágenes del disco duro");

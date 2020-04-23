@@ -7,4 +7,4 @@ email: ipcamseguridad5@gmail.com
 emailPass: oropesa00
 smtpHost: smtp.gmail.com
 smtpPort: 587
-uploadsDirectory: C:\PayaraUploads\
+uploadsDirectory: /PayaraUploads/
