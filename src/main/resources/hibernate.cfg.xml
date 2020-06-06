@@ -11,6 +11,7 @@
         <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <property name="connection.username">root</property>
         <property name="connection.password">root</property>
+        <property name="javax.persistence.lock.timeout">600000</property>
         <!-- <property name="connection.driver_class">org.mariadb.jdbc.Driver</property> -->
         <mapping class="modelo.entity.FotoPuntoInteresEntity"/>
         <mapping class="modelo.entity.PuntoInteresEntity"/>

@@ -131,19 +131,19 @@ public class PuntosInteresDao {
         return puntoInteresEntities;
     }
 
-    public boolean activar(int id) {
-        boolean activado = false;
+    public PuntoInteresEntity activar(int id) {
+        PuntoInteresEntity poi = null;
         try {
             session = HibernateUtil.getSession();
             session.beginTransaction();
             Query query = session.createQuery("update PuntoInteresEntity p set p.activado=true where p.id=:id");
             query.setParameter("id", id);
-            if (query.executeUpdate() > 0) {
-                activado = true;
-            } else {
+            if (query.executeUpdate() == 0) {
                 new ServerException(HttpURLConnection.HTTP_NOT_FOUND, "No hay ningún punto con este id");
             }
             session.getTransaction().commit();
+
+            poi=get(id);
 
         } catch (Exception e) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
@@ -158,7 +158,7 @@ public class PuntosInteresDao {
         } finally {
             session.close();
         }
-        return activado;
+        return poi;
     }
 
     public boolean delete(int id) {

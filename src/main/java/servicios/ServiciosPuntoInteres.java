@@ -13,6 +13,7 @@ import modelo.entity.UsuarioEntity;
 import org.glassfish.jersey.media.multipart.BodyPartEntity;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.modelmapper.ModelMapper;
+import utils.MandarMail;
 import utils.ValidacionTool;
 
 import javax.inject.Inject;
@@ -31,6 +32,8 @@ public class ServiciosPuntoInteres {
     private ValidacionTool validacionTool;
     @Inject
     private ServiciosFotos serviciosFotos;
+    @Inject
+    private MandarMail mandarMail;
 
     public List<PuntoInteresDtoGetMaestro> getAll() throws ServerException {
         return puntosInteresDao.getAll().stream().map(poi -> modelMapper.map(poi, PuntoInteresDtoGetMaestro.class)).collect(Collectors.toList());
@@ -100,7 +103,17 @@ public class ServiciosPuntoInteres {
     }
 
     public boolean activar(int id) {
-        return puntosInteresDao.activar(id);
+        boolean activado=false;
+        PuntoInteresEntity poi=puntosInteresDao.activar(id);
+        if(poi!=null){
+            activado=true;
+            try {
+                mandarMail.mandarMail(poi.getUsuarioByIdUsuario().getEmail(), "Enhorabuena!\nHemos añadido tu punto: "+poi.getNombre()+" a nuesta app, ya puedes entrar a valorarlo.", "Activación punto de interés");
+            }catch (Exception e){
+                throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR,"El punto se ha activado, pero no se ha podido mandar el email de confirmación");
+            }
+        }
+        return activado;
     }
 
     public boolean borrarPunto(int id){

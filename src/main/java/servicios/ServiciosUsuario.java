@@ -64,29 +64,7 @@ public class ServiciosUsuario {
     }
 
 
-   /* public int update(UsuarioDtoPost newUsuario) throws ServerException {
-        int modified = Constantes.FAIL;
-        String password = null;
-        String erroresValidacion = validacion.validarObjeto(newUsuario);
-        if (erroresValidacion.length() == 0) {
-            try {
-                password = passwordHash.createHash(newUsuario.getPassword());
-                newUsuario.setPassword(password);
-                modified = userDao.update(newUsuario);
-            } catch (NoSuchAlgorithmException e) {
-                Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
-                throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR, "Ha ocurrido un error en nuestra base de datos");
-            } catch (InvalidKeySpecException e) {
-                Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
-                throw new ServerException(HttpURLConnection.HTTP_INTERNAL_ERROR, "Ha ocurrido un error en nuestra base de datos");
-            }
-        }else{
-            throw new ServerException(HttpURLConnection.HTTP_BAD_REQUEST, erroresValidacion);
-        }
-        return modified;
-    }
 
-*/
     public boolean delete(String userID) throws ServerException {
         boolean borrado = false;
         Integer id = Ints.tryParse(userID);
@@ -98,26 +76,7 @@ public class ServiciosUsuario {
         return borrado;
     }
 
-    /*
 
-    public List<UsuarioDTO> getAll() throws ServerException {
-        return userDao.getAll().stream()
-                .map(usuario -> usuarioConverter.converterUserUserDTO(usuario)).collect(Collectors.toList());
-
-    }
-
-    public UsuarioDTO get(String userID) throws ServerException {
-        UsuarioDTO usuario = null;
-        Integer id = Ints.tryParse(userID);
-        if (id != null) {
-            usuario = usuarioConverter.converterUserUserDTO(userDao.getUsuario(id));
-        }else{
-            throw new ServerException(HttpURLConnection.HTTP_BAD_REQUEST, "El ID no es un número");
-        }
-        return usuario;
-    }
-
-    */
 
     public UsuarioDtoGet checkCredenciales(UsuarioDtoPost usuario) throws ServerException {
         UsuarioDtoGet usuarioDtoGet = null;
@@ -194,16 +153,7 @@ public class ServiciosUsuario {
         return result;
     }
 
-    /*
 
-    public String getPublicKey(String userId){
-        Integer id = Ints.tryParse(userId);
-        if (id != null) {
-           return userDao.getPublicKey(id);
-        }else{
-            throw new ServerException(HttpURLConnection.HTTP_BAD_REQUEST, "El ID no es un número");
-        }
-    }*/
 
 
 }

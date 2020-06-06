@@ -1,7 +1,6 @@
 package servicios;
 
 import com.google.common.io.Files;
-import config.Configuration;
 import dao.FotosDao;
 import dao.PuntosInteresDao;
 import modelo.ServerException;
@@ -121,7 +120,7 @@ public class ServiciosFotos {
     public boolean delete(int id) {
         boolean borrado=false;
         FotoPuntoInteresEntity foto = fotosDao.get(id);
-        File file = new File(Configuration.getInstance().getUploadsDirectory() + FilenameUtils.separatorsToSystem(foto.getPath()));
+        File file = new File(System.getProperty("catalina.base")+File.separator+ FilenameUtils.separatorsToSystem(foto.getPath()));
         if (file.delete()) {
             fotosDao.delete(id);
             borrado=true;

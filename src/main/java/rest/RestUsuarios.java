@@ -89,7 +89,7 @@ public class RestUsuarios {
                     .build();
             String baseUrl = request.getRequestURL().toString().substring(0, request.getRequestURL().indexOf(request.getServletPath()));
             mandarMail.mandarMail(usuario.getEmail(), "Pincha para activar tu cuenta: <a href=\"" + baseUrl + "/activacion" + "?email=" + usuario.getEmail() + "&codigo_activacion=" + codgiActivacion + "\">aquí</a>", "Activación usuario");
-            response = Response.status(Response.Status.CREATED).entity(userKeystore).build();
+            response = Response.status(Response.Status.CREATED).entity(usuarioDtoGet).build();
         } catch (EmailException e) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
             if (usuarioDtoGet != null) {
